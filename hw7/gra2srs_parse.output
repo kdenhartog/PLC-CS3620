@@ -1,0 +1,1059 @@
+   0  $accept : %entry% $end
+
+   1  main : grammar
+   2       | EOF
+
+   3  cur_position :
+
+   4  args : cur_position
+   5       | term args_args_comma0
+
+   6  atom : prim post
+   7       | charset_atom_tilde1 LS charset_atom_charset_prim2 RS post
+   8       | BANG
+   9       | LP form RP post
+
+  10  charset_prim : STRING_LIT MINUS STRING_LIT
+  11               | STRING_LIT
+
+  12  form : forma BAR form
+  13       | forma
+
+  14  forma : seq_forma_atom3
+
+  15  grammar : ID START ID grammar_grammar_whitespace4 grammar_grammar_syntactic5 grammar_grammar_lexical7 grammar_grammar_vars9 grammar_grammar_rules11
+
+  16  lex : ID lex_op lex_lex_form13 DOT
+
+  17  lex_op : ARROW
+  18         | THICKARROW
+
+  19  post : STAR
+  20       | PLUS
+  21       | QMARK
+  22       | cur_position
+
+  23  prim : ID
+  24       | STRING_LIT
+
+  25  prod : ID COLON ID ARROW prod_prod_form14 DOT
+  26       | ID ARROW produnnamed_prod_form15 DOT
+
+  27  rule : term ARROW term
+
+  28  term : ID LP args RP
+  29       | ID
+
+  30  produnnamed_prod_form15 : cur_position
+  31                          | form
+
+  32  prod_prod_form14 : cur_position
+  33                   | form
+
+  34  lex_lex_form13 : cur_position
+  35                 | form
+
+  36  grammar_grammar_rules11 : cur_position
+  37                          | RULES grammar_grammar_rule12
+
+  38  grammar_grammar_rule12 : cur_position
+  39                         | rule grammar_grammar_rule12
+
+  40  grammar_grammar_vars9 : cur_position
+  41                        | VARS grammar_grammar_id10
+
+  42  grammar_grammar_id10 : cur_position
+  43                       | ID grammar_grammar_id10
+
+  44  grammar_grammar_lexical7 : cur_position
+  45                           | LEXICAL grammar_grammar_lex8
+
+  46  grammar_grammar_lex8 : cur_position
+  47                       | lex grammar_grammar_lex8
+
+  48  grammar_grammar_syntactic5 : cur_position
+  49                             | SYNTACTIC grammar_grammar_prod6
+
+  50  grammar_grammar_prod6 : cur_position
+  51                        | prod grammar_grammar_prod6
+
+  52  grammar_grammar_whitespace4 : cur_position
+  53                              | WHITESPACE ID
+
+  54  seq_forma_atom3 : atom
+  55                  | atom seq_forma_atom3
+
+  56  charset_atom_charset_prim2 : cur_position
+  57                             | charset_prim charset_atom_charset_prim2
+
+  58  charset_atom_tilde1 : cur_position
+  59                      | TILDE
+
+  60  args_args_comma0 : cur_position
+  61                   | COMMA term args_args_comma0
+
+  62  %entry% : '\001' main
+
+state 0
+	$accept : . %entry% $end  (0)
+
+	'\001'  shift 1
+	.  error
+
+	%entry%  goto 2
+
+
+state 1
+	%entry% : '\001' . main  (62)
+
+	EOF  shift 3
+	ID  shift 4
+	.  error
+
+	main  goto 5
+	grammar  goto 6
+
+
+state 2
+	$accept : %entry% . $end  (0)
+
+	$end  accept
+
+
+state 3
+	main : EOF .  (2)
+
+	.  reduce 2
+
+
+state 4
+	grammar : ID . START ID grammar_grammar_whitespace4 grammar_grammar_syntactic5 grammar_grammar_lexical7 grammar_grammar_vars9 grammar_grammar_rules11  (15)
+
+	START  shift 7
+	.  error
+
+
+state 5
+	%entry% : '\001' main .  (62)
+
+	.  reduce 62
+
+
+state 6
+	main : grammar .  (1)
+
+	.  reduce 1
+
+
+state 7
+	grammar : ID START . ID grammar_grammar_whitespace4 grammar_grammar_syntactic5 grammar_grammar_lexical7 grammar_grammar_vars9 grammar_grammar_rules11  (15)
+
+	ID  shift 8
+	.  error
+
+
+state 8
+	grammar : ID START ID . grammar_grammar_whitespace4 grammar_grammar_syntactic5 grammar_grammar_lexical7 grammar_grammar_vars9 grammar_grammar_rules11  (15)
+	cur_position : .  (3)
+
+	WHITESPACE  shift 9
+	$end  reduce 3
+	LEXICAL  reduce 3
+	RULES  reduce 3
+	SYNTACTIC  reduce 3
+	VARS  reduce 3
+
+	grammar_grammar_whitespace4  goto 10
+	cur_position  goto 11
+
+
+state 9
+	grammar_grammar_whitespace4 : WHITESPACE . ID  (53)
+
+	ID  shift 12
+	.  error
+
+
+state 10
+	grammar : ID START ID grammar_grammar_whitespace4 . grammar_grammar_syntactic5 grammar_grammar_lexical7 grammar_grammar_vars9 grammar_grammar_rules11  (15)
+	cur_position : .  (3)
+
+	SYNTACTIC  shift 13
+	$end  reduce 3
+	LEXICAL  reduce 3
+	RULES  reduce 3
+	VARS  reduce 3
+
+	grammar_grammar_syntactic5  goto 14
+	cur_position  goto 15
+
+
+state 11
+	grammar_grammar_whitespace4 : cur_position .  (52)
+
+	.  reduce 52
+
+
+state 12
+	grammar_grammar_whitespace4 : WHITESPACE ID .  (53)
+
+	.  reduce 53
+
+
+state 13
+	grammar_grammar_syntactic5 : SYNTACTIC . grammar_grammar_prod6  (49)
+	cur_position : .  (3)
+
+	ID  shift 16
+	$end  reduce 3
+	LEXICAL  reduce 3
+	RULES  reduce 3
+	VARS  reduce 3
+
+	grammar_grammar_prod6  goto 17
+	prod  goto 18
+	cur_position  goto 19
+
+
+state 14
+	grammar : ID START ID grammar_grammar_whitespace4 grammar_grammar_syntactic5 . grammar_grammar_lexical7 grammar_grammar_vars9 grammar_grammar_rules11  (15)
+	cur_position : .  (3)
+
+	LEXICAL  shift 20
+	$end  reduce 3
+	RULES  reduce 3
+	VARS  reduce 3
+
+	grammar_grammar_lexical7  goto 21
+	cur_position  goto 22
+
+
+state 15
+	grammar_grammar_syntactic5 : cur_position .  (48)
+
+	.  reduce 48
+
+
+state 16
+	prod : ID . COLON ID ARROW prod_prod_form14 DOT  (25)
+	prod : ID . ARROW produnnamed_prod_form15 DOT  (26)
+
+	ARROW  shift 23
+	COLON  shift 24
+	.  error
+
+
+state 17
+	grammar_grammar_syntactic5 : SYNTACTIC grammar_grammar_prod6 .  (49)
+
+	.  reduce 49
+
+
+state 18
+	grammar_grammar_prod6 : prod . grammar_grammar_prod6  (51)
+	cur_position : .  (3)
+
+	ID  shift 16
+	$end  reduce 3
+	LEXICAL  reduce 3
+	RULES  reduce 3
+	VARS  reduce 3
+
+	grammar_grammar_prod6  goto 25
+	prod  goto 18
+	cur_position  goto 19
+
+
+state 19
+	grammar_grammar_prod6 : cur_position .  (50)
+
+	.  reduce 50
+
+
+state 20
+	grammar_grammar_lexical7 : LEXICAL . grammar_grammar_lex8  (45)
+	cur_position : .  (3)
+
+	ID  shift 26
+	$end  reduce 3
+	RULES  reduce 3
+	VARS  reduce 3
+
+	grammar_grammar_lex8  goto 27
+	lex  goto 28
+	cur_position  goto 29
+
+
+state 21
+	grammar : ID START ID grammar_grammar_whitespace4 grammar_grammar_syntactic5 grammar_grammar_lexical7 . grammar_grammar_vars9 grammar_grammar_rules11  (15)
+	cur_position : .  (3)
+
+	VARS  shift 30
+	$end  reduce 3
+	RULES  reduce 3
+
+	grammar_grammar_vars9  goto 31
+	cur_position  goto 32
+
+
+state 22
+	grammar_grammar_lexical7 : cur_position .  (44)
+
+	.  reduce 44
+
+
+state 23
+	prod : ID ARROW . produnnamed_prod_form15 DOT  (26)
+	cur_position : .  (3)
+
+	BANG  shift 33
+	LP  shift 34
+	TILDE  shift 35
+	ID  shift 36
+	STRING_LIT  shift 37
+	DOT  reduce 3
+	LS  reduce 3
+
+	atom  goto 38
+	charset_atom_tilde1  goto 39
+	form  goto 40
+	forma  goto 41
+	prim  goto 42
+	produnnamed_prod_form15  goto 43
+	seq_forma_atom3  goto 44
+	cur_position  goto 45
+
+
+state 24
+	prod : ID COLON . ID ARROW prod_prod_form14 DOT  (25)
+
+	ID  shift 46
+	.  error
+
+
+state 25
+	grammar_grammar_prod6 : prod grammar_grammar_prod6 .  (51)
+
+	.  reduce 51
+
+
+state 26
+	lex : ID . lex_op lex_lex_form13 DOT  (16)
+
+	ARROW  shift 47
+	THICKARROW  shift 48
+	.  error
+
+	lex_op  goto 49
+
+
+state 27
+	grammar_grammar_lexical7 : LEXICAL grammar_grammar_lex8 .  (45)
+
+	.  reduce 45
+
+
+state 28
+	grammar_grammar_lex8 : lex . grammar_grammar_lex8  (47)
+	cur_position : .  (3)
+
+	ID  shift 26
+	$end  reduce 3
+	RULES  reduce 3
+	VARS  reduce 3
+
+	grammar_grammar_lex8  goto 50
+	lex  goto 28
+	cur_position  goto 29
+
+
+state 29
+	grammar_grammar_lex8 : cur_position .  (46)
+
+	.  reduce 46
+
+
+state 30
+	grammar_grammar_vars9 : VARS . grammar_grammar_id10  (41)
+	cur_position : .  (3)
+
+	ID  shift 51
+	$end  reduce 3
+	RULES  reduce 3
+
+	grammar_grammar_id10  goto 52
+	cur_position  goto 53
+
+
+state 31
+	grammar : ID START ID grammar_grammar_whitespace4 grammar_grammar_syntactic5 grammar_grammar_lexical7 grammar_grammar_vars9 . grammar_grammar_rules11  (15)
+	cur_position : .  (3)
+
+	RULES  shift 54
+	$end  reduce 3
+
+	grammar_grammar_rules11  goto 55
+	cur_position  goto 56
+
+
+state 32
+	grammar_grammar_vars9 : cur_position .  (40)
+
+	.  reduce 40
+
+
+state 33
+	atom : BANG .  (8)
+
+	.  reduce 8
+
+
+state 34
+	atom : LP . form RP post  (9)
+	cur_position : .  (3)
+
+	BANG  shift 33
+	LP  shift 34
+	TILDE  shift 35
+	ID  shift 36
+	STRING_LIT  shift 37
+	LS  reduce 3
+
+	atom  goto 38
+	charset_atom_tilde1  goto 39
+	form  goto 57
+	forma  goto 41
+	prim  goto 42
+	seq_forma_atom3  goto 44
+	cur_position  goto 58
+
+
+state 35
+	charset_atom_tilde1 : TILDE .  (59)
+
+	.  reduce 59
+
+
+state 36
+	prim : ID .  (23)
+
+	.  reduce 23
+
+
+state 37
+	prim : STRING_LIT .  (24)
+
+	.  reduce 24
+
+
+state 38
+	seq_forma_atom3 : atom .  (54)
+	seq_forma_atom3 : atom . seq_forma_atom3  (55)
+	cur_position : .  (3)
+
+	BANG  shift 33
+	LP  shift 34
+	TILDE  shift 35
+	ID  shift 36
+	STRING_LIT  shift 37
+	BAR  reduce 54
+	DOT  reduce 54
+	LS  reduce 3
+	RP  reduce 54
+
+	atom  goto 38
+	charset_atom_tilde1  goto 39
+	prim  goto 42
+	seq_forma_atom3  goto 59
+	cur_position  goto 58
+
+
+state 39
+	atom : charset_atom_tilde1 . LS charset_atom_charset_prim2 RS post  (7)
+
+	LS  shift 60
+	.  error
+
+
+state 40
+	produnnamed_prod_form15 : form .  (31)
+
+	.  reduce 31
+
+
+state 41
+	form : forma . BAR form  (12)
+	form : forma .  (13)
+
+	BAR  shift 61
+	DOT  reduce 13
+	RP  reduce 13
+
+
+state 42
+	atom : prim . post  (6)
+	cur_position : .  (3)
+
+	PLUS  shift 62
+	QMARK  shift 63
+	STAR  shift 64
+	BANG  reduce 3
+	BAR  reduce 3
+	DOT  reduce 3
+	LP  reduce 3
+	LS  reduce 3
+	RP  reduce 3
+	TILDE  reduce 3
+	ID  reduce 3
+	STRING_LIT  reduce 3
+
+	post  goto 65
+	cur_position  goto 66
+
+
+state 43
+	prod : ID ARROW produnnamed_prod_form15 . DOT  (26)
+
+	DOT  shift 67
+	.  error
+
+
+state 44
+	forma : seq_forma_atom3 .  (14)
+
+	.  reduce 14
+
+
+state 45
+	produnnamed_prod_form15 : cur_position .  (30)
+	charset_atom_tilde1 : cur_position .  (58)
+
+	DOT  reduce 30
+	LS  reduce 58
+
+
+state 46
+	prod : ID COLON ID . ARROW prod_prod_form14 DOT  (25)
+
+	ARROW  shift 68
+	.  error
+
+
+state 47
+	lex_op : ARROW .  (17)
+
+	.  reduce 17
+
+
+state 48
+	lex_op : THICKARROW .  (18)
+
+	.  reduce 18
+
+
+state 49
+	lex : ID lex_op . lex_lex_form13 DOT  (16)
+	cur_position : .  (3)
+
+	BANG  shift 33
+	LP  shift 34
+	TILDE  shift 35
+	ID  shift 36
+	STRING_LIT  shift 37
+	DOT  reduce 3
+	LS  reduce 3
+
+	atom  goto 38
+	charset_atom_tilde1  goto 39
+	form  goto 69
+	forma  goto 41
+	lex_lex_form13  goto 70
+	prim  goto 42
+	seq_forma_atom3  goto 44
+	cur_position  goto 71
+
+
+state 50
+	grammar_grammar_lex8 : lex grammar_grammar_lex8 .  (47)
+
+	.  reduce 47
+
+
+state 51
+	grammar_grammar_id10 : ID . grammar_grammar_id10  (43)
+	cur_position : .  (3)
+
+	ID  shift 51
+	$end  reduce 3
+	RULES  reduce 3
+
+	grammar_grammar_id10  goto 72
+	cur_position  goto 53
+
+
+state 52
+	grammar_grammar_vars9 : VARS grammar_grammar_id10 .  (41)
+
+	.  reduce 41
+
+
+state 53
+	grammar_grammar_id10 : cur_position .  (42)
+
+	.  reduce 42
+
+
+state 54
+	grammar_grammar_rules11 : RULES . grammar_grammar_rule12  (37)
+	cur_position : .  (3)
+
+	ID  shift 73
+	$end  reduce 3
+
+	grammar_grammar_rule12  goto 74
+	rule  goto 75
+	term  goto 76
+	cur_position  goto 77
+
+
+state 55
+	grammar : ID START ID grammar_grammar_whitespace4 grammar_grammar_syntactic5 grammar_grammar_lexical7 grammar_grammar_vars9 grammar_grammar_rules11 .  (15)
+
+	.  reduce 15
+
+
+state 56
+	grammar_grammar_rules11 : cur_position .  (36)
+
+	.  reduce 36
+
+
+state 57
+	atom : LP form . RP post  (9)
+
+	RP  shift 78
+	.  error
+
+
+state 58
+	charset_atom_tilde1 : cur_position .  (58)
+
+	.  reduce 58
+
+
+state 59
+	seq_forma_atom3 : atom seq_forma_atom3 .  (55)
+
+	.  reduce 55
+
+
+state 60
+	atom : charset_atom_tilde1 LS . charset_atom_charset_prim2 RS post  (7)
+	cur_position : .  (3)
+
+	STRING_LIT  shift 79
+	RS  reduce 3
+
+	charset_atom_charset_prim2  goto 80
+	charset_prim  goto 81
+	cur_position  goto 82
+
+
+state 61
+	form : forma BAR . form  (12)
+	cur_position : .  (3)
+
+	BANG  shift 33
+	LP  shift 34
+	TILDE  shift 35
+	ID  shift 36
+	STRING_LIT  shift 37
+	LS  reduce 3
+
+	atom  goto 38
+	charset_atom_tilde1  goto 39
+	form  goto 83
+	forma  goto 41
+	prim  goto 42
+	seq_forma_atom3  goto 44
+	cur_position  goto 58
+
+
+state 62
+	post : PLUS .  (20)
+
+	.  reduce 20
+
+
+state 63
+	post : QMARK .  (21)
+
+	.  reduce 21
+
+
+state 64
+	post : STAR .  (19)
+
+	.  reduce 19
+
+
+state 65
+	atom : prim post .  (6)
+
+	.  reduce 6
+
+
+state 66
+	post : cur_position .  (22)
+
+	.  reduce 22
+
+
+state 67
+	prod : ID ARROW produnnamed_prod_form15 DOT .  (26)
+
+	.  reduce 26
+
+
+state 68
+	prod : ID COLON ID ARROW . prod_prod_form14 DOT  (25)
+	cur_position : .  (3)
+
+	BANG  shift 33
+	LP  shift 34
+	TILDE  shift 35
+	ID  shift 36
+	STRING_LIT  shift 37
+	DOT  reduce 3
+	LS  reduce 3
+
+	atom  goto 38
+	charset_atom_tilde1  goto 39
+	form  goto 84
+	forma  goto 41
+	prim  goto 42
+	prod_prod_form14  goto 85
+	seq_forma_atom3  goto 44
+	cur_position  goto 86
+
+
+state 69
+	lex_lex_form13 : form .  (35)
+
+	.  reduce 35
+
+
+state 70
+	lex : ID lex_op lex_lex_form13 . DOT  (16)
+
+	DOT  shift 87
+	.  error
+
+
+state 71
+	lex_lex_form13 : cur_position .  (34)
+	charset_atom_tilde1 : cur_position .  (58)
+
+	DOT  reduce 34
+	LS  reduce 58
+
+
+state 72
+	grammar_grammar_id10 : ID grammar_grammar_id10 .  (43)
+
+	.  reduce 43
+
+
+state 73
+	term : ID . LP args RP  (28)
+	term : ID .  (29)
+
+	LP  shift 88
+	$end  reduce 29
+	ARROW  reduce 29
+	COMMA  reduce 29
+	RP  reduce 29
+	ID  reduce 29
+
+
+state 74
+	grammar_grammar_rules11 : RULES grammar_grammar_rule12 .  (37)
+
+	.  reduce 37
+
+
+state 75
+	grammar_grammar_rule12 : rule . grammar_grammar_rule12  (39)
+	cur_position : .  (3)
+
+	ID  shift 73
+	$end  reduce 3
+
+	grammar_grammar_rule12  goto 89
+	rule  goto 75
+	term  goto 76
+	cur_position  goto 77
+
+
+state 76
+	rule : term . ARROW term  (27)
+
+	ARROW  shift 90
+	.  error
+
+
+state 77
+	grammar_grammar_rule12 : cur_position .  (38)
+
+	.  reduce 38
+
+
+state 78
+	atom : LP form RP . post  (9)
+	cur_position : .  (3)
+
+	PLUS  shift 62
+	QMARK  shift 63
+	STAR  shift 64
+	BANG  reduce 3
+	BAR  reduce 3
+	DOT  reduce 3
+	LP  reduce 3
+	LS  reduce 3
+	RP  reduce 3
+	TILDE  reduce 3
+	ID  reduce 3
+	STRING_LIT  reduce 3
+
+	post  goto 91
+	cur_position  goto 66
+
+
+state 79
+	charset_prim : STRING_LIT . MINUS STRING_LIT  (10)
+	charset_prim : STRING_LIT .  (11)
+
+	MINUS  shift 92
+	RS  reduce 11
+	STRING_LIT  reduce 11
+
+
+state 80
+	atom : charset_atom_tilde1 LS charset_atom_charset_prim2 . RS post  (7)
+
+	RS  shift 93
+	.  error
+
+
+state 81
+	charset_atom_charset_prim2 : charset_prim . charset_atom_charset_prim2  (57)
+	cur_position : .  (3)
+
+	STRING_LIT  shift 79
+	RS  reduce 3
+
+	charset_atom_charset_prim2  goto 94
+	charset_prim  goto 81
+	cur_position  goto 82
+
+
+state 82
+	charset_atom_charset_prim2 : cur_position .  (56)
+
+	.  reduce 56
+
+
+state 83
+	form : forma BAR form .  (12)
+
+	.  reduce 12
+
+
+state 84
+	prod_prod_form14 : form .  (33)
+
+	.  reduce 33
+
+
+state 85
+	prod : ID COLON ID ARROW prod_prod_form14 . DOT  (25)
+
+	DOT  shift 95
+	.  error
+
+
+state 86
+	prod_prod_form14 : cur_position .  (32)
+	charset_atom_tilde1 : cur_position .  (58)
+
+	DOT  reduce 32
+	LS  reduce 58
+
+
+state 87
+	lex : ID lex_op lex_lex_form13 DOT .  (16)
+
+	.  reduce 16
+
+
+state 88
+	term : ID LP . args RP  (28)
+	cur_position : .  (3)
+
+	ID  shift 73
+	RP  reduce 3
+
+	args  goto 96
+	term  goto 97
+	cur_position  goto 98
+
+
+state 89
+	grammar_grammar_rule12 : rule grammar_grammar_rule12 .  (39)
+
+	.  reduce 39
+
+
+state 90
+	rule : term ARROW . term  (27)
+
+	ID  shift 73
+	.  error
+
+	term  goto 99
+
+
+state 91
+	atom : LP form RP post .  (9)
+
+	.  reduce 9
+
+
+state 92
+	charset_prim : STRING_LIT MINUS . STRING_LIT  (10)
+
+	STRING_LIT  shift 100
+	.  error
+
+
+state 93
+	atom : charset_atom_tilde1 LS charset_atom_charset_prim2 RS . post  (7)
+	cur_position : .  (3)
+
+	PLUS  shift 62
+	QMARK  shift 63
+	STAR  shift 64
+	BANG  reduce 3
+	BAR  reduce 3
+	DOT  reduce 3
+	LP  reduce 3
+	LS  reduce 3
+	RP  reduce 3
+	TILDE  reduce 3
+	ID  reduce 3
+	STRING_LIT  reduce 3
+
+	post  goto 101
+	cur_position  goto 66
+
+
+state 94
+	charset_atom_charset_prim2 : charset_prim charset_atom_charset_prim2 .  (57)
+
+	.  reduce 57
+
+
+state 95
+	prod : ID COLON ID ARROW prod_prod_form14 DOT .  (25)
+
+	.  reduce 25
+
+
+state 96
+	term : ID LP args . RP  (28)
+
+	RP  shift 102
+	.  error
+
+
+state 97
+	args : term . args_args_comma0  (5)
+	cur_position : .  (3)
+
+	COMMA  shift 103
+	RP  reduce 3
+
+	args_args_comma0  goto 104
+	cur_position  goto 105
+
+
+state 98
+	args : cur_position .  (4)
+
+	.  reduce 4
+
+
+state 99
+	rule : term ARROW term .  (27)
+
+	.  reduce 27
+
+
+state 100
+	charset_prim : STRING_LIT MINUS STRING_LIT .  (10)
+
+	.  reduce 10
+
+
+state 101
+	atom : charset_atom_tilde1 LS charset_atom_charset_prim2 RS post .  (7)
+
+	.  reduce 7
+
+
+state 102
+	term : ID LP args RP .  (28)
+
+	.  reduce 28
+
+
+state 103
+	args_args_comma0 : COMMA . term args_args_comma0  (61)
+
+	ID  shift 73
+	.  error
+
+	term  goto 106
+
+
+state 104
+	args : term args_args_comma0 .  (5)
+
+	.  reduce 5
+
+
+state 105
+	args_args_comma0 : cur_position .  (60)
+
+	.  reduce 60
+
+
+state 106
+	args_args_comma0 : COMMA term . args_args_comma0  (61)
+	cur_position : .  (3)
+
+	COMMA  shift 103
+	RP  reduce 3
+
+	args_args_comma0  goto 107
+	cur_position  goto 105
+
+
+state 107
+	args_args_comma0 : COMMA term args_args_comma0 .  (61)
+
+	.  reduce 61
+
+
+28 terminals, 33 nonterminals
+63 grammar rules, 108 states

@@ -1,0 +1,2 @@
+plus : nat -> nat -> nat .
+filter : (a -> bool) -> list -> list .

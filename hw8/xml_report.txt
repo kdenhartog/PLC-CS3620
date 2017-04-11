@@ -1,0 +1,469 @@
+Beginning processing of grammar xml.
+(Time elapsed: 0.)
+Converted grammar to AST for grammars.
+xml
+
+Start
+
+start
+
+
+
+Syntactic
+
+Posinfo : posinfo -> .
+Strt : start -> ows xml ows .
+Nested : xml -> starttag ows xml ows endtag .
+Seq : xml -> xml ows xml .
+StartEnd : xml -> startendtag .
+StartTag : starttag -> posinfo '<' id attrs '>' posinfo .
+EndTag : endtag -> posinfo '<' '/' id '>' posinfo .
+AttrsCons : attrs -> ws posinfo id posinfo ows '=' ows posinfo strlit posinfo attrs .
+AttrsNil : attrs -> .
+Startendtag : startendtag -> posinfo '<' id attrs '/' '>' posinfo .
+
+
+Lexical
+
+aws-bar-1 => '\t' .
+aws-bar-1 => ' ' .
+aws-bar-2 => '\n' .
+aws-bar-2 => aws-bar-1 .
+aws => aws-bar-2 .
+ws-plus-3 => aws .
+ws-plus-3 => aws ws-plus-3 .
+ws => ws-plus-3 .
+ows-star-4 => .
+ows-star-4 => aws ows-star-4 .
+ows => ows-star-4 .
+id-plus-5 -> namechar .
+id-plus-5 -> namechar id-plus-5 .
+id -> id-plus-5 .
+strlit-bar-6 -> '_' .
+strlit-bar-6 -> '\\' '\"' .
+strlit-bar-7 -> ' ' .
+strlit-bar-7 -> strlit-bar-6 .
+strlit-bar-8 -> '.' .
+strlit-bar-8 -> strlit-bar-7 .
+strlit-bar-9 -> ',' .
+strlit-bar-9 -> strlit-bar-8 .
+strlit-bar-10 -> namechar .
+strlit-bar-10 -> strlit-bar-9 .
+strlit-star-11 -> .
+strlit-star-11 -> strlit-bar-10 strlit-star-11 .
+strlit -> '\"' strlit-star-11 '\"' .
+namechar-range-12 -> '-' .
+namechar-range-12 -> '0' .
+namechar-range-12 -> '1' .
+namechar-range-12 -> '2' .
+namechar-range-12 -> '3' .
+namechar-range-12 -> '4' .
+namechar-range-12 -> '5' .
+namechar-range-12 -> '6' .
+namechar-range-12 -> '7' .
+namechar-range-12 -> '8' .
+namechar-range-12 -> '9' .
+namechar-range-12 -> 'A' .
+namechar-range-12 -> 'B' .
+namechar-range-12 -> 'C' .
+namechar-range-12 -> 'D' .
+namechar-range-12 -> 'E' .
+namechar-range-12 -> 'F' .
+namechar-range-12 -> 'G' .
+namechar-range-12 -> 'H' .
+namechar-range-12 -> 'I' .
+namechar-range-12 -> 'J' .
+namechar-range-12 -> 'K' .
+namechar-range-12 -> 'L' .
+namechar-range-12 -> 'M' .
+namechar-range-12 -> 'N' .
+namechar-range-12 -> 'O' .
+namechar-range-12 -> 'P' .
+namechar-range-12 -> 'Q' .
+namechar-range-12 -> 'R' .
+namechar-range-12 -> 'S' .
+namechar-range-12 -> 'T' .
+namechar-range-12 -> 'U' .
+namechar-range-12 -> 'V' .
+namechar-range-12 -> 'W' .
+namechar-range-12 -> 'X' .
+namechar-range-12 -> 'Y' .
+namechar-range-12 -> 'Z' .
+namechar-range-12 -> 'a' .
+namechar-range-12 -> 'b' .
+namechar-range-12 -> 'c' .
+namechar-range-12 -> 'd' .
+namechar-range-12 -> 'e' .
+namechar-range-12 -> 'f' .
+namechar-range-12 -> 'g' .
+namechar-range-12 -> 'h' .
+namechar-range-12 -> 'i' .
+namechar-range-12 -> 'j' .
+namechar-range-12 -> 'k' .
+namechar-range-12 -> 'l' .
+namechar-range-12 -> 'm' .
+namechar-range-12 -> 'n' .
+namechar-range-12 -> 'o' .
+namechar-range-12 -> 'p' .
+namechar-range-12 -> 'q' .
+namechar-range-12 -> 'r' .
+namechar-range-12 -> 's' .
+namechar-range-12 -> 't' .
+namechar-range-12 -> 'u' .
+namechar-range-12 -> 'v' .
+namechar-range-12 -> 'w' .
+namechar-range-12 -> 'x' .
+namechar-range-12 -> 'y' .
+namechar-range-12 -> 'z' .
+namechar -> namechar-range-12 .
+
+
+Vars
+
+ x3 x2 x1 x0
+
+Rules
+
+0: Seq(Seq(x1, x2), x3) -> Seq(x1, Seq(x2, x3))
+
+
+Syntactic non-terminals (defined by syntactic productions):
+  xml starttag startendtag start posinfo endtag attrs 
+
+Reading non-terminals (defined by lexical ->-productions):
+  strlit-star-11 strlit-bar-9 strlit-bar-8 strlit-bar-7 strlit-bar-6 strlit-bar-10 strlit namechar-range-12 namechar id-plus-5 id 
+
+Recognizing non-terminals (defined by lexical =>-productions):
+  ws-plus-3 ws ows-star-4 ows aws-bar-2 aws-bar-1 aws 
+
+Terminal symbols:
+  'z' 'y' 'x' 'w' 'v' 'u' 't' 's' 'r' 'q' 'p' 'o' 'n' 'm' 'l' 'k' 'j' 'i' 'h' 'g' 'f' 'e' 'd' 'c' 'b' 'a' '_' '\t' '\n' '\\' '\"' 'Z' 'Y' 'X' 'W' 'V' 'U' 'T' 'S' 'R' 'Q' 'P' 'O' 'N' 'M' 'L' 'K' 'J' 'I' 'H' 'G' 'F' 'E' 'D' 'C' 'B' 'A' '>' '=' '<' '9' '8' '7' '6' '5' '4' '3' '2' '1' '0' '/' '.' '-' ',' ' ' 
+
+
+
+(The parsing TRS for the grammar is:
+(
+AttrsCons:  #ws posinfo[0] id[1] posinfo[2] #ows #'=' #ows posinfo[3] strlit[4] posinfo[5] attrs[6] -> attrs[AttrsCons(x0, x1, x2, x3, x4, x5, x6)]
+AttrsNil:  -> attrs[AttrsNil]
+EndTag:  posinfo[0] #'<' #'/' id[1] #'>' posinfo[2] -> endtag[EndTag(x0, x1, x2)]
+Nested:  starttag[0] #ows xml[1] #ows endtag[2] -> xml[Nested(x0, x1, x2)]
+P0:  #'\t' -> aws-bar-1[]
+P1:  #' ' -> aws-bar-1[]
+P10:  #ows-star-4 -> ows[]
+P11:  namechar[0] -> id-plus-5[string-append(0, x0)]
+P12:  namechar[0] id-plus-5[1] -> id-plus-5[string-append(1, x0, x1)]
+P13:  id-plus-5[0] -> id[string-append(0, x0)]
+P14:  '_' -> strlit-bar-6[string-append(0, char-to-string('_'))]
+P15:  '\\' '\"' -> strlit-bar-6[string-append(1, char-to-string('\\'), char-to-string('\"'))]
+P16:  ' ' -> strlit-bar-7[string-append(0, char-to-string(' '))]
+P17:  strlit-bar-6[0] -> strlit-bar-7[string-append(0, x0)]
+P18:  '.' -> strlit-bar-8[string-append(0, char-to-string('.'))]
+P19:  strlit-bar-7[0] -> strlit-bar-8[string-append(0, x0)]
+P2:  #'\n' -> aws-bar-2[]
+P20:  ',' -> strlit-bar-9[string-append(0, char-to-string(','))]
+P21:  strlit-bar-8[0] -> strlit-bar-9[string-append(0, x0)]
+P22:  namechar[0] -> strlit-bar-10[string-append(0, x0)]
+P23:  strlit-bar-9[0] -> strlit-bar-10[string-append(0, x0)]
+P24:  -> strlit-star-11[empty-string]
+P25:  strlit-bar-10[0] strlit-star-11[1] -> strlit-star-11[string-append(1, x0, x1)]
+P26:  '\"' strlit-star-11[0] '\"' -> strlit[string-append(2, char-to-string('\"'), x0, char-to-string('\"'))]
+P27:  '-' -> namechar-range-12[string-append(0, char-to-string('-'))]
+P28:  '0' -> namechar-range-12[string-append(0, char-to-string('0'))]
+P29:  '1' -> namechar-range-12[string-append(0, char-to-string('1'))]
+P3:  #aws-bar-1 -> aws-bar-2[]
+P30:  '2' -> namechar-range-12[string-append(0, char-to-string('2'))]
+P31:  '3' -> namechar-range-12[string-append(0, char-to-string('3'))]
+P32:  '4' -> namechar-range-12[string-append(0, char-to-string('4'))]
+P33:  '5' -> namechar-range-12[string-append(0, char-to-string('5'))]
+P34:  '6' -> namechar-range-12[string-append(0, char-to-string('6'))]
+P35:  '7' -> namechar-range-12[string-append(0, char-to-string('7'))]
+P36:  '8' -> namechar-range-12[string-append(0, char-to-string('8'))]
+P37:  '9' -> namechar-range-12[string-append(0, char-to-string('9'))]
+P38:  'A' -> namechar-range-12[string-append(0, char-to-string('A'))]
+P39:  'B' -> namechar-range-12[string-append(0, char-to-string('B'))]
+P4:  #aws-bar-2 -> aws[]
+P40:  'C' -> namechar-range-12[string-append(0, char-to-string('C'))]
+P41:  'D' -> namechar-range-12[string-append(0, char-to-string('D'))]
+P42:  'E' -> namechar-range-12[string-append(0, char-to-string('E'))]
+P43:  'F' -> namechar-range-12[string-append(0, char-to-string('F'))]
+P44:  'G' -> namechar-range-12[string-append(0, char-to-string('G'))]
+P45:  'H' -> namechar-range-12[string-append(0, char-to-string('H'))]
+P46:  'I' -> namechar-range-12[string-append(0, char-to-string('I'))]
+P47:  'J' -> namechar-range-12[string-append(0, char-to-string('J'))]
+P48:  'K' -> namechar-range-12[string-append(0, char-to-string('K'))]
+P49:  'L' -> namechar-range-12[string-append(0, char-to-string('L'))]
+P5:  #aws -> ws-plus-3[]
+P50:  'M' -> namechar-range-12[string-append(0, char-to-string('M'))]
+P51:  'N' -> namechar-range-12[string-append(0, char-to-string('N'))]
+P52:  'O' -> namechar-range-12[string-append(0, char-to-string('O'))]
+P53:  'P' -> namechar-range-12[string-append(0, char-to-string('P'))]
+P54:  'Q' -> namechar-range-12[string-append(0, char-to-string('Q'))]
+P55:  'R' -> namechar-range-12[string-append(0, char-to-string('R'))]
+P56:  'S' -> namechar-range-12[string-append(0, char-to-string('S'))]
+P57:  'T' -> namechar-range-12[string-append(0, char-to-string('T'))]
+P58:  'U' -> namechar-range-12[string-append(0, char-to-string('U'))]
+P59:  'V' -> namechar-range-12[string-append(0, char-to-string('V'))]
+P6:  #aws #ws-plus-3 -> ws-plus-3[]
+P60:  'W' -> namechar-range-12[string-append(0, char-to-string('W'))]
+P61:  'X' -> namechar-range-12[string-append(0, char-to-string('X'))]
+P62:  'Y' -> namechar-range-12[string-append(0, char-to-string('Y'))]
+P63:  'Z' -> namechar-range-12[string-append(0, char-to-string('Z'))]
+P64:  'a' -> namechar-range-12[string-append(0, char-to-string('a'))]
+P65:  'b' -> namechar-range-12[string-append(0, char-to-string('b'))]
+P66:  'c' -> namechar-range-12[string-append(0, char-to-string('c'))]
+P67:  'd' -> namechar-range-12[string-append(0, char-to-string('d'))]
+P68:  'e' -> namechar-range-12[string-append(0, char-to-string('e'))]
+P69:  'f' -> namechar-range-12[string-append(0, char-to-string('f'))]
+P7:  #ws-plus-3 -> ws[]
+P70:  'g' -> namechar-range-12[string-append(0, char-to-string('g'))]
+P71:  'h' -> namechar-range-12[string-append(0, char-to-string('h'))]
+P72:  'i' -> namechar-range-12[string-append(0, char-to-string('i'))]
+P73:  'j' -> namechar-range-12[string-append(0, char-to-string('j'))]
+P74:  'k' -> namechar-range-12[string-append(0, char-to-string('k'))]
+P75:  'l' -> namechar-range-12[string-append(0, char-to-string('l'))]
+P76:  'm' -> namechar-range-12[string-append(0, char-to-string('m'))]
+P77:  'n' -> namechar-range-12[string-append(0, char-to-string('n'))]
+P78:  'o' -> namechar-range-12[string-append(0, char-to-string('o'))]
+P79:  'p' -> namechar-range-12[string-append(0, char-to-string('p'))]
+P8:  -> ows-star-4[]
+P80:  'q' -> namechar-range-12[string-append(0, char-to-string('q'))]
+P81:  'r' -> namechar-range-12[string-append(0, char-to-string('r'))]
+P82:  's' -> namechar-range-12[string-append(0, char-to-string('s'))]
+P83:  't' -> namechar-range-12[string-append(0, char-to-string('t'))]
+P84:  'u' -> namechar-range-12[string-append(0, char-to-string('u'))]
+P85:  'v' -> namechar-range-12[string-append(0, char-to-string('v'))]
+P86:  'w' -> namechar-range-12[string-append(0, char-to-string('w'))]
+P87:  'x' -> namechar-range-12[string-append(0, char-to-string('x'))]
+P88:  'y' -> namechar-range-12[string-append(0, char-to-string('y'))]
+P89:  'z' -> namechar-range-12[string-append(0, char-to-string('z'))]
+P9:  #aws #ows-star-4 -> ows-star-4[]
+P90:  namechar-range-12[0] -> namechar[string-append(0, x0)]
+Posinfo:  -> posinfo[Posinfo]
+Seq:  xml[0] #ows xml[1] -> xml[Seq(x0, x1)]
+StartEnd:  startendtag[0] -> xml[StartEnd(x0)]
+StartTag:  posinfo[0] #'<' id[1] attrs[2] #'>' posinfo[3] -> starttag[StartTag(x0, x1, x2, x3)]
+Startendtag:  posinfo[0] #'<' id[1] attrs[2] #'/' #'>' posinfo[3] -> startendtag[Startendtag(x0, x1, x2, x3)]
+Strt:  #ows xml[0] #ows -> start[Strt(x0)]
+)
+)
+(The reorganizing TRS is terminating.)
+(Derivational complexity of the reorganizing TRS: O(n^2))
+(Local confluence of the reorganizing TRS: true)
+
+(Time elapsed: 0.016)
+Found nullable (attrs, AttrsNil)
+Found nullable (strlit-star-11, P24)
+Found nullable (ows-star-4, P8)
+Found nullable (posinfo, Posinfo)
+Found nullable (ows, P10)
+)
+(The parsing TRS that arises from the final automaton:
+(
+AttrsCons:  #ws posinfo[0] id[1] posinfo[2] #ows #'=' #ows posinfo[3] strlit[4] posinfo[5] attrs[6] -> attrs[AttrsCons(x0, x1, x2, x3, x4, x5, x6)]
+AttrsNil:  -> attrs[AttrsNil]
+EndTag:  posinfo[0] #'<' #'/' id[1] #'>' posinfo[2] -> endtag[EndTag(x0, x1, x2)]
+Nested:  starttag[0] #ows xml[1] #ows endtag[2] -> xml[Nested(x0, x1, x2)]
+P0:  #'\t' -> aws-bar-1[]
+P1:  #' ' -> aws-bar-1[]
+P10:  #ows-star-4 -> ows[]
+P11:  namechar[0] -> id-plus-5[string-append(0, x0)]
+P12:  namechar[0] id-plus-5[1] -> id-plus-5[string-append(1, x0, x1)]
+P13:  id-plus-5[0] -> id[string-append(0, x0)]
+P14:  '_' -> strlit-bar-6[string-append(0, char-to-string('_'))]
+P15:  '\\' '\"' -> strlit-bar-6[string-append(1, char-to-string('\\'), char-to-string('\"'))]
+P16:  ' ' -> strlit-bar-7[string-append(0, char-to-string(' '))]
+P17:  strlit-bar-6[0] -> strlit-bar-7[string-append(0, x0)]
+P18:  '.' -> strlit-bar-8[string-append(0, char-to-string('.'))]
+P19:  strlit-bar-7[0] -> strlit-bar-8[string-append(0, x0)]
+P2:  #'\n' -> aws-bar-2[]
+P20:  ',' -> strlit-bar-9[string-append(0, char-to-string(','))]
+P21:  strlit-bar-8[0] -> strlit-bar-9[string-append(0, x0)]
+P22:  namechar[0] -> strlit-bar-10[string-append(0, x0)]
+P23:  strlit-bar-9[0] -> strlit-bar-10[string-append(0, x0)]
+P24:  -> strlit-star-11[empty-string]
+P25:  strlit-bar-10[0] strlit-star-11[1] -> strlit-star-11[string-append(1, x0, x1)]
+P26:  '\"' strlit-star-11[0] '\"' -> strlit[string-append(2, char-to-string('\"'), x0, char-to-string('\"'))]
+P27:  '-' -> namechar-range-12[string-append(0, char-to-string('-'))]
+P28:  '0' -> namechar-range-12[string-append(0, char-to-string('0'))]
+P29:  '1' -> namechar-range-12[string-append(0, char-to-string('1'))]
+P3:  #aws-bar-1 -> aws-bar-2[]
+P30:  '2' -> namechar-range-12[string-append(0, char-to-string('2'))]
+P31:  '3' -> namechar-range-12[string-append(0, char-to-string('3'))]
+P32:  '4' -> namechar-range-12[string-append(0, char-to-string('4'))]
+P33:  '5' -> namechar-range-12[string-append(0, char-to-string('5'))]
+P34:  '6' -> namechar-range-12[string-append(0, char-to-string('6'))]
+P35:  '7' -> namechar-range-12[string-append(0, char-to-string('7'))]
+P36:  '8' -> namechar-range-12[string-append(0, char-to-string('8'))]
+P37:  '9' -> namechar-range-12[string-append(0, char-to-string('9'))]
+P38:  'A' -> namechar-range-12[string-append(0, char-to-string('A'))]
+P39:  'B' -> namechar-range-12[string-append(0, char-to-string('B'))]
+P4:  #aws-bar-2 -> aws[]
+P40:  'C' -> namechar-range-12[string-append(0, char-to-string('C'))]
+P41:  'D' -> namechar-range-12[string-append(0, char-to-string('D'))]
+P42:  'E' -> namechar-range-12[string-append(0, char-to-string('E'))]
+P43:  'F' -> namechar-range-12[string-append(0, char-to-string('F'))]
+P44:  'G' -> namechar-range-12[string-append(0, char-to-string('G'))]
+P45:  'H' -> namechar-range-12[string-append(0, char-to-string('H'))]
+P46:  'I' -> namechar-range-12[string-append(0, char-to-string('I'))]
+P47:  'J' -> namechar-range-12[string-append(0, char-to-string('J'))]
+P48:  'K' -> namechar-range-12[string-append(0, char-to-string('K'))]
+P49:  'L' -> namechar-range-12[string-append(0, char-to-string('L'))]
+P5:  #aws -> ws-plus-3[]
+P50:  'M' -> namechar-range-12[string-append(0, char-to-string('M'))]
+P51:  'N' -> namechar-range-12[string-append(0, char-to-string('N'))]
+P52:  'O' -> namechar-range-12[string-append(0, char-to-string('O'))]
+P53:  'P' -> namechar-range-12[string-append(0, char-to-string('P'))]
+P54:  'Q' -> namechar-range-12[string-append(0, char-to-string('Q'))]
+P55:  'R' -> namechar-range-12[string-append(0, char-to-string('R'))]
+P56:  'S' -> namechar-range-12[string-append(0, char-to-string('S'))]
+P57:  'T' -> namechar-range-12[string-append(0, char-to-string('T'))]
+P58:  'U' -> namechar-range-12[string-append(0, char-to-string('U'))]
+P59:  'V' -> namechar-range-12[string-append(0, char-to-string('V'))]
+P6:  #aws #ws-plus-3 -> ws-plus-3[]
+P60:  'W' -> namechar-range-12[string-append(0, char-to-string('W'))]
+P61:  'X' -> namechar-range-12[string-append(0, char-to-string('X'))]
+P62:  'Y' -> namechar-range-12[string-append(0, char-to-string('Y'))]
+P63:  'Z' -> namechar-range-12[string-append(0, char-to-string('Z'))]
+P64:  'a' -> namechar-range-12[string-append(0, char-to-string('a'))]
+P65:  'b' -> namechar-range-12[string-append(0, char-to-string('b'))]
+P66:  'c' -> namechar-range-12[string-append(0, char-to-string('c'))]
+P67:  'd' -> namechar-range-12[string-append(0, char-to-string('d'))]
+P68:  'e' -> namechar-range-12[string-append(0, char-to-string('e'))]
+P69:  'f' -> namechar-range-12[string-append(0, char-to-string('f'))]
+P7:  #ws-plus-3 -> ws[]
+P70:  'g' -> namechar-range-12[string-append(0, char-to-string('g'))]
+P71:  'h' -> namechar-range-12[string-append(0, char-to-string('h'))]
+P72:  'i' -> namechar-range-12[string-append(0, char-to-string('i'))]
+P73:  'j' -> namechar-range-12[string-append(0, char-to-string('j'))]
+P74:  'k' -> namechar-range-12[string-append(0, char-to-string('k'))]
+P75:  'l' -> namechar-range-12[string-append(0, char-to-string('l'))]
+P76:  'm' -> namechar-range-12[string-append(0, char-to-string('m'))]
+P77:  'n' -> namechar-range-12[string-append(0, char-to-string('n'))]
+P78:  'o' -> namechar-range-12[string-append(0, char-to-string('o'))]
+P79:  'p' -> namechar-range-12[string-append(0, char-to-string('p'))]
+P8:  -> ows-star-4[]
+P80:  'q' -> namechar-range-12[string-append(0, char-to-string('q'))]
+P81:  'r' -> namechar-range-12[string-append(0, char-to-string('r'))]
+P82:  's' -> namechar-range-12[string-append(0, char-to-string('s'))]
+P83:  't' -> namechar-range-12[string-append(0, char-to-string('t'))]
+P84:  'u' -> namechar-range-12[string-append(0, char-to-string('u'))]
+P85:  'v' -> namechar-range-12[string-append(0, char-to-string('v'))]
+P86:  'w' -> namechar-range-12[string-append(0, char-to-string('w'))]
+P87:  'x' -> namechar-range-12[string-append(0, char-to-string('x'))]
+P88:  'y' -> namechar-range-12[string-append(0, char-to-string('y'))]
+P89:  'z' -> namechar-range-12[string-append(0, char-to-string('z'))]
+P9:  #aws #ows-star-4 -> ows-star-4[]
+P90:  namechar-range-12[0] -> namechar[string-append(0, x0)]
+Posinfo:  -> posinfo[Posinfo]
+Seq:  xml[0] #ows xml[1] -> xml[Seq(x0, x1)]
+StartEnd:  startendtag[0] -> xml[StartEnd(x0)]
+StartTag:  posinfo[0] #'<' id[1] attrs[2] #'>' posinfo[3] -> starttag[StartTag(x0, x1, x2, x3)]
+Startendtag:  posinfo[0] #'<' id[1] attrs[2] #'/' #'>' posinfo[3] -> startendtag[Startendtag(x0, x1, x2, x3)]
+Strt:  #ows xml[0] #ows -> start[Strt(x0)]
+)
+)
+(The TRS corresponding to the final parsing TRS:
+AttrsCons: AttrsCons . ws . posinfo(x0) . id(x1) . posinfo(x2) . ows . '=' . ows . posinfo(x3) . strlit(x4) . posinfo(x5) . attrs(x6) . x7 -> attrs(AttrsCons(x0, x1, x2, x3, x4, x5, x6)) . x7
+AttrsNil: AttrsNil . x1 -> attrs(AttrsNil) . x1
+EndTag: EndTag . posinfo(x0) . '<' . '/' . id(x1) . '>' . posinfo(x2) . x3 -> endtag(EndTag(x0, x1, x2)) . x3
+Nested: Nested . starttag(x0) . ows . xml(x1) . ows . endtag(x2) . x3 -> xml(Nested(x0, x1, x2)) . x3
+P0: P0 . '\t' . x1 -> aws-bar-1 . x1
+P1: P1 . ' ' . x1 -> aws-bar-1 . x1
+P10: P10 . ows-star-4 . x1 -> ows . x1
+P11: P11 . namechar(x0) . x1 -> id-plus-5(string-append(0, x0)) . x1
+P12: P12 . namechar(x0) . id-plus-5(x1) . x2 -> id-plus-5(string-append(1, x0, x1)) . x2
+P13: P13 . id-plus-5(x0) . x1 -> id(string-append(0, x0)) . x1
+P14: P14 . '_' . x1 -> strlit-bar-6(string-append(0, char-to-string('_'))) . x1
+P15: P15 . '\\' . '\"' . x1 -> strlit-bar-6(string-append(1, char-to-string('\\'), char-to-string('\"'))) . x1
+P16: P16 . ' ' . x1 -> strlit-bar-7(string-append(0, char-to-string(' '))) . x1
+P17: P17 . strlit-bar-6(x0) . x1 -> strlit-bar-7(string-append(0, x0)) . x1
+P18: P18 . '.' . x1 -> strlit-bar-8(string-append(0, char-to-string('.'))) . x1
+P19: P19 . strlit-bar-7(x0) . x1 -> strlit-bar-8(string-append(0, x0)) . x1
+P2: P2 . '\n' . x1 -> aws-bar-2 . x1
+P20: P20 . ',' . x1 -> strlit-bar-9(string-append(0, char-to-string(','))) . x1
+P21: P21 . strlit-bar-8(x0) . x1 -> strlit-bar-9(string-append(0, x0)) . x1
+P22: P22 . namechar(x0) . x1 -> strlit-bar-10(string-append(0, x0)) . x1
+P23: P23 . strlit-bar-9(x0) . x1 -> strlit-bar-10(string-append(0, x0)) . x1
+P24: P24 . x1 -> strlit-star-11(empty-string) . x1
+P25: P25 . strlit-bar-10(x0) . strlit-star-11(x1) . x2 -> strlit-star-11(string-append(1, x0, x1)) . x2
+P26: P26 . '\"' . strlit-star-11(x0) . '\"' . x1 -> strlit(string-append(2, char-to-string('\"'), x0, char-to-string('\"'))) . x1
+P27: P27 . '-' . x1 -> namechar-range-12(string-append(0, char-to-string('-'))) . x1
+P28: P28 . '0' . x1 -> namechar-range-12(string-append(0, char-to-string('0'))) . x1
+P29: P29 . '1' . x1 -> namechar-range-12(string-append(0, char-to-string('1'))) . x1
+P3: P3 . aws-bar-1 . x1 -> aws-bar-2 . x1
+P30: P30 . '2' . x1 -> namechar-range-12(string-append(0, char-to-string('2'))) . x1
+P31: P31 . '3' . x1 -> namechar-range-12(string-append(0, char-to-string('3'))) . x1
+P32: P32 . '4' . x1 -> namechar-range-12(string-append(0, char-to-string('4'))) . x1
+P33: P33 . '5' . x1 -> namechar-range-12(string-append(0, char-to-string('5'))) . x1
+P34: P34 . '6' . x1 -> namechar-range-12(string-append(0, char-to-string('6'))) . x1
+P35: P35 . '7' . x1 -> namechar-range-12(string-append(0, char-to-string('7'))) . x1
+P36: P36 . '8' . x1 -> namechar-range-12(string-append(0, char-to-string('8'))) . x1
+P37: P37 . '9' . x1 -> namechar-range-12(string-append(0, char-to-string('9'))) . x1
+P38: P38 . 'A' . x1 -> namechar-range-12(string-append(0, char-to-string('A'))) . x1
+P39: P39 . 'B' . x1 -> namechar-range-12(string-append(0, char-to-string('B'))) . x1
+P4: P4 . aws-bar-2 . x1 -> aws . x1
+P40: P40 . 'C' . x1 -> namechar-range-12(string-append(0, char-to-string('C'))) . x1
+P41: P41 . 'D' . x1 -> namechar-range-12(string-append(0, char-to-string('D'))) . x1
+P42: P42 . 'E' . x1 -> namechar-range-12(string-append(0, char-to-string('E'))) . x1
+P43: P43 . 'F' . x1 -> namechar-range-12(string-append(0, char-to-string('F'))) . x1
+P44: P44 . 'G' . x1 -> namechar-range-12(string-append(0, char-to-string('G'))) . x1
+P45: P45 . 'H' . x1 -> namechar-range-12(string-append(0, char-to-string('H'))) . x1
+P46: P46 . 'I' . x1 -> namechar-range-12(string-append(0, char-to-string('I'))) . x1
+P47: P47 . 'J' . x1 -> namechar-range-12(string-append(0, char-to-string('J'))) . x1
+P48: P48 . 'K' . x1 -> namechar-range-12(string-append(0, char-to-string('K'))) . x1
+P49: P49 . 'L' . x1 -> namechar-range-12(string-append(0, char-to-string('L'))) . x1
+P5: P5 . aws . x1 -> ws-plus-3 . x1
+P50: P50 . 'M' . x1 -> namechar-range-12(string-append(0, char-to-string('M'))) . x1
+P51: P51 . 'N' . x1 -> namechar-range-12(string-append(0, char-to-string('N'))) . x1
+P52: P52 . 'O' . x1 -> namechar-range-12(string-append(0, char-to-string('O'))) . x1
+P53: P53 . 'P' . x1 -> namechar-range-12(string-append(0, char-to-string('P'))) . x1
+P54: P54 . 'Q' . x1 -> namechar-range-12(string-append(0, char-to-string('Q'))) . x1
+P55: P55 . 'R' . x1 -> namechar-range-12(string-append(0, char-to-string('R'))) . x1
+P56: P56 . 'S' . x1 -> namechar-range-12(string-append(0, char-to-string('S'))) . x1
+P57: P57 . 'T' . x1 -> namechar-range-12(string-append(0, char-to-string('T'))) . x1
+P58: P58 . 'U' . x1 -> namechar-range-12(string-append(0, char-to-string('U'))) . x1
+P59: P59 . 'V' . x1 -> namechar-range-12(string-append(0, char-to-string('V'))) . x1
+P6: P6 . aws . ws-plus-3 . x1 -> ws-plus-3 . x1
+P60: P60 . 'W' . x1 -> namechar-range-12(string-append(0, char-to-string('W'))) . x1
+P61: P61 . 'X' . x1 -> namechar-range-12(string-append(0, char-to-string('X'))) . x1
+P62: P62 . 'Y' . x1 -> namechar-range-12(string-append(0, char-to-string('Y'))) . x1
+P63: P63 . 'Z' . x1 -> namechar-range-12(string-append(0, char-to-string('Z'))) . x1
+P64: P64 . 'a' . x1 -> namechar-range-12(string-append(0, char-to-string('a'))) . x1
+P65: P65 . 'b' . x1 -> namechar-range-12(string-append(0, char-to-string('b'))) . x1
+P66: P66 . 'c' . x1 -> namechar-range-12(string-append(0, char-to-string('c'))) . x1
+P67: P67 . 'd' . x1 -> namechar-range-12(string-append(0, char-to-string('d'))) . x1
+P68: P68 . 'e' . x1 -> namechar-range-12(string-append(0, char-to-string('e'))) . x1
+P69: P69 . 'f' . x1 -> namechar-range-12(string-append(0, char-to-string('f'))) . x1
+P7: P7 . ws-plus-3 . x1 -> ws . x1
+P70: P70 . 'g' . x1 -> namechar-range-12(string-append(0, char-to-string('g'))) . x1
+P71: P71 . 'h' . x1 -> namechar-range-12(string-append(0, char-to-string('h'))) . x1
+P72: P72 . 'i' . x1 -> namechar-range-12(string-append(0, char-to-string('i'))) . x1
+P73: P73 . 'j' . x1 -> namechar-range-12(string-append(0, char-to-string('j'))) . x1
+P74: P74 . 'k' . x1 -> namechar-range-12(string-append(0, char-to-string('k'))) . x1
+P75: P75 . 'l' . x1 -> namechar-range-12(string-append(0, char-to-string('l'))) . x1
+P76: P76 . 'm' . x1 -> namechar-range-12(string-append(0, char-to-string('m'))) . x1
+P77: P77 . 'n' . x1 -> namechar-range-12(string-append(0, char-to-string('n'))) . x1
+P78: P78 . 'o' . x1 -> namechar-range-12(string-append(0, char-to-string('o'))) . x1
+P79: P79 . 'p' . x1 -> namechar-range-12(string-append(0, char-to-string('p'))) . x1
+P8: P8 . x1 -> ows-star-4 . x1
+P80: P80 . 'q' . x1 -> namechar-range-12(string-append(0, char-to-string('q'))) . x1
+P81: P81 . 'r' . x1 -> namechar-range-12(string-append(0, char-to-string('r'))) . x1
+P82: P82 . 's' . x1 -> namechar-range-12(string-append(0, char-to-string('s'))) . x1
+P83: P83 . 't' . x1 -> namechar-range-12(string-append(0, char-to-string('t'))) . x1
+P84: P84 . 'u' . x1 -> namechar-range-12(string-append(0, char-to-string('u'))) . x1
+P85: P85 . 'v' . x1 -> namechar-range-12(string-append(0, char-to-string('v'))) . x1
+P86: P86 . 'w' . x1 -> namechar-range-12(string-append(0, char-to-string('w'))) . x1
+P87: P87 . 'x' . x1 -> namechar-range-12(string-append(0, char-to-string('x'))) . x1
+P88: P88 . 'y' . x1 -> namechar-range-12(string-append(0, char-to-string('y'))) . x1
+P89: P89 . 'z' . x1 -> namechar-range-12(string-append(0, char-to-string('z'))) . x1
+P9: P9 . aws . ows-star-4 . x1 -> ows-star-4 . x1
+P90: P90 . namechar-range-12(x0) . x1 -> namechar(string-append(0, x0)) . x1
+Posinfo: Posinfo . x1 -> posinfo(Posinfo) . x1
+Seq: xml(x0) . ows . xml(x1) . x2 -> xml(Seq(x0, x1)) . x2
+StartEnd: StartEnd . startendtag(x0) . x1 -> xml(StartEnd(x0)) . x1
+StartTag: StartTag . posinfo(x0) . '<' . id(x1) . attrs(x2) . '>' . posinfo(x3) . x4 -> starttag(StartTag(x0, x1, x2, x3)) . x4
+Startendtag: Startendtag . posinfo(x0) . '<' . id(x1) . attrs(x2) . '/' . '>' . posinfo(x3) . x4 -> startendtag(Startendtag(x0, x1, x2, x3)) . x4
+Strt: Strt . ows . xml(x0) . ows . Strt_end . x1 -> start(Strt(x0)) . x1
+)
+(No reorganizing critical pairs found.)
+(No parsing critical pairs found.)

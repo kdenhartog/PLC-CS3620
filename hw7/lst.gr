@@ -1,0 +1,34 @@
+lst
+
+Start
+
+strt
+
+Syntactic
+
+strt -> ows expr ows .
+
+Var : expr -> var.
+Parens : expr -> '(' ows expr ows ')' .
+Cons : expr -> expr ows '::' ows expr .
+App : expr -> expr ows '++' ows expr.
+Nil : expr -> '[]'.
+
+Lexical
+
+var -> ['a' - 'z']+.
+arrow => '→' | '->'.
+ows => aws*.
+ws => aws+.
+aws => '\n' | '\t' | space.
+
+Vars 
+
+x y z
+
+Rules
+
+Cons(Cons(x,y),z) -> Cons(x,Cons(y,z))
+App(App(x,y),z) -> App(x,App(y,z))
+Cons(App(x,y),z) -> App(x,Cons(y,z))
+Cons(x,App(y,z)) -> App(Cons(x,y),z) 

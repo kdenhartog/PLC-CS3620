@@ -1,0 +1,35 @@
+ocamlc -c intmap.ml
+ocamlc -c util.ml
+ocamlc -c trie.ml
+ocamlc -c gra2srs_util.ml
+ocamlc -c gra2srs_syntax.ml
+ocamlyacc -v gra2srs_parse.mly
+ocamlc -c gra2srs_parse.mli
+ocamlc -c gra2srs_parse.ml
+ocamllex gra2srs_lex.mll
+ocamlc -c gra2srs_lex.ml
+ocamlc -c gra2srs_pp.ml
+ocamlc -c gra2srs_eq.ml
+ocamlc -c gra2srs_gviz.ml
+ocamlc -c gra2srs_ppast.ml
+ocamlc -c term.ml
+ocamlc -c trs.ml
+ocamlc -c grammar.ml
+ocamlc -c termination.mli
+ocamlc -c termination.ml
+ocamlc -c rewriting.ml
+ocamlc -c localconf.ml
+ocamlc -c ast.ml
+ocamlc -c rewrite_rules.ml
+ocamlc -c parsing_trs.ml
+ocamlc -c sccs.ml
+ocamlc -c uf.ml
+ocamlc -c tree.ml
+ocamlc -c genrtn.ml
+ocamlc -c compile_agda.ml
+ocamlc -c complexity.ml
+ocamlc -c aut.ml
+ocamlc -c builddfa.ml
+ocamlc -c ambig.ml
+ocamlc -c main.ml
+ocamlc -o gratr.exe str.cma unix.cma nums.cma intmap.cmo util.cmo trie.cmo gra2srs_util.cmo gra2srs_syntax.cmo gra2srs_parse.cmo gra2srs_lex.cmo gra2srs_pp.cmo gra2srs_eq.cmo gra2srs_gviz.cmo gra2srs_ppast.cmo term.cmo trs.cmo grammar.cmo termination.cmo rewriting.cmo localconf.cmo ast.cmo rewrite_rules.cmo parsing_trs.cmo sccs.cmo uf.cmo tree.cmo genrtn.cmo compile_agda.cmo complexity.cmo aut.cmo ambig.cmo builddfa.cmo main.cmo 

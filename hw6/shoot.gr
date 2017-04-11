@@ -1,0 +1,38 @@
+shoot
+
+Start
+
+start
+
+Lexical
+
+start -> ows (declared ws)? (used ws)? (defs ws)? .
+
+declared -> 'declared:' vars.
+used -> 'used:' vars.
+defs -> 'defs:' ds.
+
+vars -> ws var vars.
+vars -> .
+
+ds -> ws d ds .
+ds -> .
+
+d -> var '@' num ws 'local(' num ')'.
+d -> var '@' num ws 'global(' is-declared ')'.
+
+is-declared -> 'true'.
+is-declared -> 'false'.
+
+letterm -> 'let' ws var ows '=' ows term ws 'in' ws letterm.
+letterm -> term.
+term -> var .
+term -> '(' ows letterm ows ')'.
+
+aws => ('\n' | '\t' | space ).
+ws => aws+.
+ows => aws* .
+
+var -> ['a' - 'z']+.
+
+num -> ['0' - '9']+.

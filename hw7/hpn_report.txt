@@ -1,0 +1,222 @@
+Beginning processing of grammar hpn.
+(Time elapsed: 0.)
+Converted grammar to AST for grammars.
+hpn
+
+Start
+
+strt
+
+
+
+Syntactic
+
+Posinfo : posinfo -> .
+Strt : strt -> ows cmds ows .
+CmdsNext : cmds -> cmd ws cmds .
+CmdsStart : cmds -> cmd .
+ToHpn : cmd -> posnum ws 'b' 'a' 's' 'e' ws posnum .
+ToDecimal : cmd -> hpn ws 'b' 'a' 's' 'e' ws posnum .
+Zero : hpn -> '0' .
+SeqNext : hpn -> atom ows '+' ows hpn .
+SeqStart : hpn -> atom .
+Pow : atom -> '[' ows hpn ows ']' .
+
+
+Lexical
+
+posdig-range-1 -> '1' .
+posdig-range-1 -> '2' .
+posdig-range-1 -> '3' .
+posdig-range-1 -> '4' .
+posdig-range-1 -> '5' .
+posdig-range-1 -> '6' .
+posdig-range-1 -> '7' .
+posdig-range-1 -> '8' .
+posdig-range-1 -> '9' .
+posdig -> posdig-range-1 .
+posnum -> posdig .
+posnum-bar-2 -> '0' .
+posnum-bar-2 -> posdig .
+posnum-plus-3 -> posnum-bar-2 .
+posnum-plus-3 -> posnum-bar-2 posnum-plus-3 .
+posnum -> posdig posnum-plus-3 .
+num-bar-4 -> '0' .
+num-bar-4 -> posnum .
+num -> num-bar-4 .
+aws-bar-5 => '\t' .
+aws-bar-5 => '\n' .
+aws-bar-6 => ' ' .
+aws-bar-6 => aws-bar-5 .
+aws => aws-bar-6 .
+ws-plus-7 => aws .
+ws-plus-7 => aws ws-plus-7 .
+ws => ws-plus-7 .
+ows-star-8 => .
+ows-star-8 => aws ows-star-8 .
+ows => ows-star-8 .
+
+
+Vars
+
+ x0
+
+Rules
+
+
+
+Syntactic non-terminals (defined by syntactic productions):
+  strt posinfo hpn cmds cmd atom 
+
+Reading non-terminals (defined by lexical ->-productions):
+  posnum-plus-3 posnum-bar-2 posnum posdig-range-1 posdig num-bar-4 num 
+
+Recognizing non-terminals (defined by lexical =>-productions):
+  ws-plus-7 ws ows-star-8 ows aws-bar-6 aws-bar-5 aws 
+
+Terminal symbols:
+  's' 'e' 'b' 'a' ']' '\t' '\n' '[' '9' '8' '7' '6' '5' '4' '3' '2' '1' '0' '+' ' ' 
+
+
+
+(The parsing TRS for the grammar is:
+(
+CmdsNext:  cmd[0] #ws cmds[1] -> cmds[CmdsNext(x0, x1)]
+CmdsStart:  cmd[0] -> cmds[CmdsStart(x0)]
+P0:  '1' -> posdig-range-1[string-append(0, char-to-string('1'))]
+P1:  '2' -> posdig-range-1[string-append(0, char-to-string('2'))]
+P10:  posdig[0] -> posnum[string-append(0, x0)]
+P11:  '0' -> posnum-bar-2[string-append(0, char-to-string('0'))]
+P12:  posdig[0] -> posnum-bar-2[string-append(0, x0)]
+P13:  posnum-bar-2[0] -> posnum-plus-3[string-append(0, x0)]
+P14:  posnum-bar-2[0] posnum-plus-3[1] -> posnum-plus-3[string-append(1, x0, x1)]
+P15:  posdig[0] posnum-plus-3[1] -> posnum[string-append(1, x0, x1)]
+P16:  '0' -> num-bar-4[string-append(0, char-to-string('0'))]
+P17:  posnum[0] -> num-bar-4[string-append(0, x0)]
+P18:  num-bar-4[0] -> num[string-append(0, x0)]
+P19:  #'\t' -> aws-bar-5[]
+P2:  '3' -> posdig-range-1[string-append(0, char-to-string('3'))]
+P20:  #'\n' -> aws-bar-5[]
+P21:  #' ' -> aws-bar-6[]
+P22:  #aws-bar-5 -> aws-bar-6[]
+P23:  #aws-bar-6 -> aws[]
+P24:  #aws -> ws-plus-7[]
+P25:  #aws #ws-plus-7 -> ws-plus-7[]
+P26:  #ws-plus-7 -> ws[]
+P27:  -> ows-star-8[]
+P28:  #aws #ows-star-8 -> ows-star-8[]
+P29:  #ows-star-8 -> ows[]
+P3:  '4' -> posdig-range-1[string-append(0, char-to-string('4'))]
+P4:  '5' -> posdig-range-1[string-append(0, char-to-string('5'))]
+P5:  '6' -> posdig-range-1[string-append(0, char-to-string('6'))]
+P6:  '7' -> posdig-range-1[string-append(0, char-to-string('7'))]
+P7:  '8' -> posdig-range-1[string-append(0, char-to-string('8'))]
+P8:  '9' -> posdig-range-1[string-append(0, char-to-string('9'))]
+P9:  posdig-range-1[0] -> posdig[string-append(0, x0)]
+Posinfo:  -> posinfo[Posinfo]
+Pow:  #'[' #ows hpn[0] #ows #']' -> atom[Pow(x0)]
+SeqNext:  atom[0] #ows #'+' #ows hpn[1] -> hpn[SeqNext(x0, x1)]
+SeqStart:  atom[0] -> hpn[SeqStart(x0)]
+Strt:  #ows cmds[0] #ows -> strt[Strt(x0)]
+ToDecimal:  hpn[0] #ws #'b' #'a' #'s' #'e' #ws posnum[1] -> cmd[ToDecimal(x0, x1)]
+ToHpn:  posnum[0] #ws #'b' #'a' #'s' #'e' #ws posnum[1] -> cmd[ToHpn(x0, x1)]
+Zero:  #'0' -> hpn[Zero]
+)
+)
+(The reorganizing TRS is terminating.)
+(Derivational complexity of the reorganizing TRS: O(n^0))
+(Local confluence of the reorganizing TRS: true)
+
+(Time elapsed: 0.005)
+Found nullable (ows-star-8, P27)
+Found nullable (ows, P29)
+Found nullable (posinfo, Posinfo)
+)
+(The parsing TRS that arises from the final automaton:
+(
+CmdsNext:  cmd[0] #ws cmds[1] -> cmds[CmdsNext(x0, x1)]
+CmdsStart:  cmd[0] -> cmds[CmdsStart(x0)]
+P0:  '1' -> posdig-range-1[string-append(0, char-to-string('1'))]
+P1:  '2' -> posdig-range-1[string-append(0, char-to-string('2'))]
+P10:  posdig[0] -> posnum[string-append(0, x0)]
+P11:  '0' -> posnum-bar-2[string-append(0, char-to-string('0'))]
+P12:  posdig[0] -> posnum-bar-2[string-append(0, x0)]
+P13:  posnum-bar-2[0] -> posnum-plus-3[string-append(0, x0)]
+P14:  posnum-bar-2[0] posnum-plus-3[1] -> posnum-plus-3[string-append(1, x0, x1)]
+P15:  posdig[0] posnum-plus-3[1] -> posnum[string-append(1, x0, x1)]
+P16:  '0' -> num-bar-4[string-append(0, char-to-string('0'))]
+P17:  posnum[0] -> num-bar-4[string-append(0, x0)]
+P18:  num-bar-4[0] -> num[string-append(0, x0)]
+P19:  #'\t' -> aws-bar-5[]
+P2:  '3' -> posdig-range-1[string-append(0, char-to-string('3'))]
+P20:  #'\n' -> aws-bar-5[]
+P21:  #' ' -> aws-bar-6[]
+P22:  #aws-bar-5 -> aws-bar-6[]
+P23:  #aws-bar-6 -> aws[]
+P24:  #aws -> ws-plus-7[]
+P25:  #aws #ws-plus-7 -> ws-plus-7[]
+P26:  #ws-plus-7 -> ws[]
+P27:  -> ows-star-8[]
+P28:  #aws #ows-star-8 -> ows-star-8[]
+P29:  #ows-star-8 -> ows[]
+P3:  '4' -> posdig-range-1[string-append(0, char-to-string('4'))]
+P4:  '5' -> posdig-range-1[string-append(0, char-to-string('5'))]
+P5:  '6' -> posdig-range-1[string-append(0, char-to-string('6'))]
+P6:  '7' -> posdig-range-1[string-append(0, char-to-string('7'))]
+P7:  '8' -> posdig-range-1[string-append(0, char-to-string('8'))]
+P8:  '9' -> posdig-range-1[string-append(0, char-to-string('9'))]
+P9:  posdig-range-1[0] -> posdig[string-append(0, x0)]
+Posinfo:  -> posinfo[Posinfo]
+Pow:  #'[' #ows hpn[0] #ows #']' -> atom[Pow(x0)]
+SeqNext:  atom[0] #ows #'+' #ows hpn[1] -> hpn[SeqNext(x0, x1)]
+SeqStart:  atom[0] -> hpn[SeqStart(x0)]
+Strt:  #ows cmds[0] #ows -> strt[Strt(x0)]
+ToDecimal:  hpn[0] #ws #'b' #'a' #'s' #'e' #ws posnum[1] -> cmd[ToDecimal(x0, x1)]
+ToHpn:  posnum[0] #ws #'b' #'a' #'s' #'e' #ws posnum[1] -> cmd[ToHpn(x0, x1)]
+Zero:  #'0' -> hpn[Zero]
+)
+)
+(The TRS corresponding to the final parsing TRS:
+CmdsNext: CmdsNext . cmd(x0) . ws . cmds(x1) . x2 -> cmds(CmdsNext(x0, x1)) . x2
+CmdsStart: CmdsStart . cmd(x0) . x1 -> cmds(CmdsStart(x0)) . x1
+P0: P0 . '1' . x1 -> posdig-range-1(string-append(0, char-to-string('1'))) . x1
+P1: P1 . '2' . x1 -> posdig-range-1(string-append(0, char-to-string('2'))) . x1
+P10: P10 . posdig(x0) . x1 -> posnum(string-append(0, x0)) . x1
+P11: P11 . '0' . x1 -> posnum-bar-2(string-append(0, char-to-string('0'))) . x1
+P12: P12 . posdig(x0) . x1 -> posnum-bar-2(string-append(0, x0)) . x1
+P13: P13 . posnum-bar-2(x0) . x1 -> posnum-plus-3(string-append(0, x0)) . x1
+P14: P14 . posnum-bar-2(x0) . posnum-plus-3(x1) . x2 -> posnum-plus-3(string-append(1, x0, x1)) . x2
+P15: P15 . posdig(x0) . posnum-plus-3(x1) . x2 -> posnum(string-append(1, x0, x1)) . x2
+P16: P16 . '0' . x1 -> num-bar-4(string-append(0, char-to-string('0'))) . x1
+P17: P17 . posnum(x0) . x1 -> num-bar-4(string-append(0, x0)) . x1
+P18: P18 . num-bar-4(x0) . x1 -> num(string-append(0, x0)) . x1
+P19: P19 . '\t' . x1 -> aws-bar-5 . x1
+P2: P2 . '3' . x1 -> posdig-range-1(string-append(0, char-to-string('3'))) . x1
+P20: P20 . '\n' . x1 -> aws-bar-5 . x1
+P21: P21 . ' ' . x1 -> aws-bar-6 . x1
+P22: P22 . aws-bar-5 . x1 -> aws-bar-6 . x1
+P23: P23 . aws-bar-6 . x1 -> aws . x1
+P24: P24 . aws . x1 -> ws-plus-7 . x1
+P25: P25 . aws . ws-plus-7 . x1 -> ws-plus-7 . x1
+P26: P26 . ws-plus-7 . x1 -> ws . x1
+P27: P27 . x1 -> ows-star-8 . x1
+P28: P28 . aws . ows-star-8 . x1 -> ows-star-8 . x1
+P29: P29 . ows-star-8 . x1 -> ows . x1
+P3: P3 . '4' . x1 -> posdig-range-1(string-append(0, char-to-string('4'))) . x1
+P4: P4 . '5' . x1 -> posdig-range-1(string-append(0, char-to-string('5'))) . x1
+P5: P5 . '6' . x1 -> posdig-range-1(string-append(0, char-to-string('6'))) . x1
+P6: P6 . '7' . x1 -> posdig-range-1(string-append(0, char-to-string('7'))) . x1
+P7: P7 . '8' . x1 -> posdig-range-1(string-append(0, char-to-string('8'))) . x1
+P8: P8 . '9' . x1 -> posdig-range-1(string-append(0, char-to-string('9'))) . x1
+P9: P9 . posdig-range-1(x0) . x1 -> posdig(string-append(0, x0)) . x1
+Posinfo: Posinfo . x1 -> posinfo(Posinfo) . x1
+Pow: Pow . '[' . ows . hpn(x0) . ows . ']' . x1 -> atom(Pow(x0)) . x1
+SeqNext: SeqNext . atom(x0) . ows . '+' . ows . hpn(x1) . x2 -> hpn(SeqNext(x0, x1)) . x2
+SeqStart: SeqStart . atom(x0) . x1 -> hpn(SeqStart(x0)) . x1
+Strt: Strt . ows . cmds(x0) . ows . x1 -> strt(Strt(x0)) . x1
+ToDecimal: ToDecimal . hpn(x0) . ws . 'b' . 'a' . 's' . 'e' . ws . posnum(x1) . x2 -> cmd(ToDecimal(x0, x1)) . x2
+ToHpn: ToHpn . posnum(x0) . ws . 'b' . 'a' . 's' . 'e' . ws . posnum(x1) . x2 -> cmd(ToHpn(x0, x1)) . x2
+Zero: Zero . '0' . x1 -> hpn(Zero) . x1
+)
+(No reorganizing critical pairs found.)
+(No parsing critical pairs found.)

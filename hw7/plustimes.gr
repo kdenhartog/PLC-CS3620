@@ -1,0 +1,44 @@
+plustimes
+
+Start
+
+strt
+
+Syntactic
+
+strt -> ows expr ows .
+
+Plus : expr -> expr ows '+' ows expr .
+Times : expr -> expr ows '*' ows expr .
+Id : expr -> id .
+Num : expr -> num .
+Parens : expr -> '(' ows expr ows ')' .
+
+Lexical 
+
+aws => ('\n' | '\t' | space ).
+ws => aws+.
+ows => aws* .
+
+anyDigs -> ['0' - '9']* .
+posDig -> ['1' - '9'] .
+
+numFirstPart -> posDig anyDigs | '0' .
+
+numSecondPart -> '.' (anyDigs posDig | '0') .
+
+num -> numFirstPart numSecondPart?. 
+
+id -> [ 'a' - 'z' ] + .
+
+Vars
+
+x y z
+
+Rules
+
+Plus(Plus(x,y),z) -> Plus(x,Plus(y,z))
+Times(Times(x,y),z) -> Times(x,Times(y,z))
+Times(Plus(x,y),z) -> Plus(x,Times(y,z))
+Times(x,Plus(y,z)) -> Plus(Times(x,y),z)
+

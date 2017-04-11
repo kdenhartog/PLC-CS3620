@@ -1,0 +1,25 @@
+(defun goto-middle ()
+  "causes your cursor to jump to the middle character of the buffer."
+  (interactive)
+  (push-mark)
+  (goto-char (/ (- (point-max) (point-min)) 2)))
+
+(defun switch-halves ()
+  "switch the first half of your buffer’s text with the second halff"
+  (interactive)
+  (kill-region (point-min) (goto-middle))
+  (goto-char (point-max))
+  (yank))
+
+(defun capother1 ()
+  "capother helper function."
+  (when (< (point) (point-max))
+    (upcase-region (point) (+ (point) 1))
+    (goto-char (+ (point) 2))
+    (capother1)))
+
+(defun capother ()
+  "Capitalizes every other character in a word."
+  (interactive)
+  (goto-char (point-min))
+  (capother1))

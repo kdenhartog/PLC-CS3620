@@ -1,0 +1,33 @@
+tp
+
+Start
+
+strt
+
+Syntactic
+
+strt -> ows tp ows .
+
+Var : tp -> var ows ':' ows tp .
+Type : tp -> var .
+ParensType : tp -> '(' ows tp ows ')' .
+Arrow : tp -> tp ows arrow ows tp .
+
+Lexical
+
+var -> ['a' - 'z']+.
+arrow => '→' | '->'.
+ows => aws*.
+ws => aws+.
+aws => '\n' | '\t' | space.
+
+Vars
+
+x y z
+
+Rules
+
+Arrow(Arrow(x,y),z) -> Arrow(x,Arrow(y,z))
+Var(Var(x,y),z) -> Var(x,Var(y,z))
+Var(Arrow(x,y),z) -> Arrow(x,Var(y,z))
+Var(x,Arrow(y,z)) -> Arrow(Var(x,y),z)

@@ -1,0 +1,35 @@
+
+processing hereditary base-n numbers
+
+Start
+
+strt
+
+Syntactic
+
+Strt : strt -> ows cmds ows.
+
+CmdsNext : cmds -> cmd ws cmds .
+CmdsStart : cmds -> cmd .
+
+ToHpn : cmd -> posnum ws 'base' ws posnum .
+ToDecimal : cmd -> hpn ws 'base' ws posnum .
+
+% hereditary base-n numbers (hpn)
+Zero : hpn -> '0' .
+SeqNext : hpn -> atom ows '+' ows hpn .
+SeqStart : hpn -> atom .
+Pow : atom -> '[' ows hpn ows ']'.
+
+Lexical
+
+% positive numbers and numbers
+posdig -> ['1'-'9'].
+posnum -> posdig .
+posnum -> posdig ('0' | posdig)+.
+num -> '0' | posnum .
+
+% whitespace
+aws => (space | '\t' | '\n').
+ws => aws+.
+ows => aws*.

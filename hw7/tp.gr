@@ -1,0 +1,35 @@
+tp
+
+Start
+
+strt
+
+Syntactic
+
+strt -> ows decls ows .
+
+declNext : decls -> decl ws decls .
+CmdsStart : decls -> decl .
+
+decl -> var ows ':' ows tp ows '.' ows .
+decl -> .
+
+Parens : tp -> '(' ows tp ows ')' .
+Arrow : tp -> tp ows arrow ows tp .
+Var : tp -> var .
+
+Lexical
+
+var -> ['a' - 'z']+.
+arrow => '->'.
+ows => aws*.
+ws => aws+.
+aws => '\n' | '\t' | space.
+
+Vars
+
+x y z
+
+Rules
+
+Arrow(Arrow(x,y),z) -> Arrow(x,Arrow(y,z))

@@ -1,0 +1,23 @@
+lettuce
+
+Start
+
+start
+
+Syntactic 
+
+InputTerm : start -> ows letterm ows .
+
+Let : letterm -> 'let' ws ! var ows '=' ows term ws 'in' ws letterm.
+embed : letterm -> term.
+Var : term -> ! var .
+Parens : term -> '(' ows letterm ows ')'.
+
+Lexical
+
+aws => ('\n' | '\t' | space ).
+ws => aws+.
+ows => aws* .
+
+var -> ['a' - 'z']+.
+

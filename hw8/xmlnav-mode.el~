@@ -1,0 +1,141 @@
+(defvar xmlnav-root-dir "/Users/kyle/Google Drive/School/Spring 2017(UIOWA)/Programming Language Concepts/Personal Repository/hw8")
+
+(defvar xmlnav-program-name (concat xmlnav-root-dir "mainx"))
+
+(autoload 'xmlnav-mode "xmlnav-mode" "Major mode for editing xmlnav files ." t)
+(add-to-list 'auto-mode-alist (cons "\\.xml\\'" 'xmlnav-mode))
+
+(let ((se-path (concat xmlnav-root-dir "/se-mode")))
+  (add-to-list 'load-path se-path)
+  (add-to-list 'load-path (concat se-path "/json.el")))
+(load-library "se")
+
+(when (version< emacs-version "24.4")
+  (defun define-error (name message &optional parent)
+    "Define NAME as a new error signal.
+MESSAGE is a string that will be output to the echo area if such an error
+is signaled without being caught by a `condition-case'.
+PARENT is either a signal or a list of signals from which it inherits.
+Defaults to `error'."
+    (unless parent (setq parent 'error))
+    (let ((conditions
+           (if (consp parent)
+               (apply #'nconc
+                      (mapcar (lambda (parent)
+                                (cons parent
+                                      (or (get parent 'error-conditions)
+                                          (error "Unknown signal `%s'" parent))))
+                              parent))
+             (cons parent (get parent 'error-conditions)))))
+      (put name 'error-conditions
+           (delete-dups (copy-sequence (cons name conditions))))
+      (when message (put name 'error-message message)))))
+
+(require 'se-mode)
+(eval-when-compile (require 'se-macros))
+
+(defun xmlnav-mode-quit()
+"Quit Xmlnav navigation mode"
+(interactive)
+(se-mode-clear-selected)
+(se-navigation-mode-quit)
+(setq se-mode-parse-tree nil))
+
+(defun xmlnav-mode-restart-backend()
+  "Restart xmlnav process"
+  (interactive)
+  (se-inf-stop)
+  (se-inf-header-timer-stop)
+  (se-inf-start (start-process "xmlnav-mode" "*xmlnav-mode*" xmlnav-program-name ))
+  (message "Restarted xmlnav process"))
+
+(defun xmlnav-mode-update-mini() "Update the mini buffer to show any error information"
+  (interactive)
+)
+
+
+(defun xmlnav-mode-select-next() "Select right sibling"
+  (interactive)
+  (se-mode-select-next)
+  (xmlnav-mode-update-mini)
+)       
+
+(defun xmlnav-mode-select-previous() "Select left sibling"
+  (interactive)
+  (se-mode-select-previous)
+  (xmlnav-mode-update-mini)
+)       
+
+(defun xmlnav-mode-expand-selected() "Select higher node"
+  (interactive)
+  (se-mode-expand-selected)
+  (xmlnav-mode-update-mini)
+)       
+
+(defun xmlnav-mode-shrink-selected() "Select recent lower node"
+  (interactive)
+  (se-mode-shrink-selected)
+  (xmlnav-mode-update-mini)
+)       
+
+(defun xmlnav-mode-select-first() "Select leftmost sibling"
+  (interactive)
+  (se-mode-select-first)
+  (xmlnav-mode-update-mini)
+)       
+
+(defun xmlnav-mode-select-last() "Select rightmost sibling"
+  (interactive)
+  (se-mode-select-last)
+  (xmlnav-mode-update-mini)
+)       
+
+(defun xmlnav-mode-toggle-hidden() "Toggle hidden state of the current selected span"
+  (interactive)
+  (message "to be implemented")
+)
+
+; se-navi-define-key maintains an association with the major mode,
+; so that different major modes using se-navi-define-key can have
+; separate keymaps.
+(defun xmlnav-modify-keymap()
+  (se-navi-define-key 'xmlnav-mode (kbd "f") #'xmlnav-mode-select-next)
+  (se-navi-define-key 'xmlnav-mode (kbd "b") #'xmlnav-mode-select-previous)
+  (se-navi-define-key 'xmlnav-mode (kbd "p") #'xmlnav-mode-expand-selected)
+  (se-navi-define-key 'xmlnav-mode (kbd "n") #'xmlnav-mode-shrink-selected)
+  (se-navi-define-key 'xmlnav-mode (kbd "g") #'se-mode-clear-selected)
+  (se-navi-define-key 'xmlnav-mode (kbd "q") #'xmlnav-mode-quit)
+  (se-navi-define-key 'xmlnav-mode (kbd "M-s") #'xmlnav-mode-quit)
+  (se-navi-define-key 'xmlnav-mode (kbd "C-g") #'xmlnav-mode-quit)
+  (se-navi-define-key 'xmlnav-mode (kbd "e") #'xmlnav-mode-select-last)
+  (se-navi-define-key 'xmlnav-mode (kbd "a") #'xmlnav-mode-select-first)
+  (se-navi-define-key 'xmlnav-mode (kbd "K") #'xmlnav-mode-restart-backend)
+  (se-navi-define-key 'xmlnav-mode (kbd "1") #'delete-other-windows)
+  (se-navi-define-key 'xmlnav-mode (kbd "t") #'xmlnav-mode-toggle-hidden)
+)
+
+(xmlnav-modify-keymap)
+
+(se-create-mode "xmlnav" nil
+  "Major mode for Xmlnav files."
+
+  (setq-local comment-start "%")
+  
+  (se-inf-start
+   (or (get-buffer-process "*xmlnav-mode*") ;; reuse if existing process
+       (start-process "xmlnav-mode" "*xmlnav-mode*" xmlnav-program-name )))
+
+  (add-to-invisibility-spec '(xmlnav-hide . t))
+)
+
+(define-key xmlnav-mode-map (kbd "M-s") #'xmlnav-start-navigation)
+
+(defun xmlnav-start-navigation()
+  "Enter Xmlnav navigation mode."
+  (interactive)
+  (setq se-mode-parse-tree nil)
+  (se-navigation-mode 1))     
+
+(provide 'xmlnav-mode)
+;;; xmlnav-mode.el ends here
+

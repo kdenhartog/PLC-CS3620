@@ -1,0 +1,104 @@
+module mainl where
+
+import parse
+open import lib
+open import lettuce-types
+import lettuce
+
+module parsem = parse lettuce.gratr2-nt ptr
+open parsem
+open parsem.pnoderiv lettuce.rrs lettuce.lettuce-rtn
+open import run ptr
+open noderiv {- from run.agda -}
+
+get-used : letterm → 𝕃 var
+get-used l = []
+
+get-declared : letterm → 𝕃 var
+get-declared l = []
+
+vars-to-string-h2 : 𝕃 string → string
+vars-to-string-h2 [] = ""
+vars-to-string-h2 (l :: ls) = "" ^ l ^ " " ^ (vars-to-string-h2 ls)
+
+vars-to-string-h1 : trie string → 𝕃 var → string → trie string
+vars-to-string-h1 t [] x = t
+vars-to-string-h1 t (l :: ls) x = vars-to-string-h1 (trie-insert t l x) ls x
+
+vars-to-string : 𝕃 var → string
+vars-to-string vs = vars-to-string-h2 (trie-strings (vars-to-string-h1 empty-trie vs ""))
+
+test0 : 𝕃 var
+test0 = "test" :: "cat" :: "dog" :: "do" :: "dog" :: []
+
+global-to-var : global → var
+global-to-var (Global var num) = var
+
+global-to-num : global → num
+global-to-num (Global var num) = num
+
+process-g-test-h : trie string → globals → string
+process-g-test-h t GlobalsNil = ""
+process-g-test-h t (GlobalsCons x g) with trie-lookup t (global-to-var x)
+... | nothing = process-g-test-h (trie-insert t (global-to-var x) (global-to-num x)) g
+... | just n = n
+
+
+{- these functions are used for declared section -}
+gs-to-var : globals → 𝕃 var
+gs-to-var (GlobalsCons x g) = (global-to-var x) :: gs-to-var g
+gs-to-var GlobalsNil = []
+
+ls-to-var : letterm → 𝕃 var
+ls-to-var (Let x x₁ l l₁) = x₁ :: ls-to-var l ++ ls-to-var l₁
+ls-to-var (Parens l) = ls-to-var l
+ls-to-var (Plus l l₁) = (ls-to-var l) ++ (ls-to-var l₁)
+ls-to-var (Var x x₁) = []
+
+ls-to-var1 : letterm → 𝕃 var
+ls-to-var1 (Let x x₁ l l₁) = (ls-to-var1 l) ++ (ls-to-var1 l₁)
+ls-to-var1 (Parens l) = ls-to-var1 l
+ls-to-var1 (Plus l l₁) = (ls-to-var1 l) ++ (ls-to-var1 l₁)
+ls-to-var1 (Var x x₁) = x₁ :: []
+
+dec-print : globals → letterm → string
+dec-print g l = "declared: " ^ vars-to-string ((gs-to-var g) ++ (ls-to-var l))
+
+used-print : globals → letterm → string
+used-print g l = "used: " ^ vars-to-string ((gs-to-var g) ++ (ls-to-var1 l))
+
+{-
+g-to-def : globals → string
+g-to-def (GlobalsCons x g) = (global-to-var x) ^ "@" ^
+g-to-def GlobalsNil = ""
+
+def-print : globals → letterm → string
+def-print g l = {!   !}
+-}
+process-start : start → string
+process-start (InputTerm g l) = (process-g-test-h empty-trie g) ^ (dec-print g l) ^ (used-print g l)
+
+process : Run → string
+process (ParseTree (parsed-start p) :: []) = process-start p
+process r = "Parsing failure (run with -" ^ "-showParsed).\n"
+
+putStrRunIf : 𝔹 → Run → IO ⊤
+putStrRunIf tt r = putStr (Run-to-string r) >> putStr "\n"
+putStrRunIf ff r = return triv
+
+processText : (showParsed : 𝔹) → string → IO ⊤
+processText showParsed x with runRtn (string-to-𝕃char x)
+... | s with s
+... | inj₁ cs = putStr "Characters left before failure : " >> putStr (𝕃char-to-string cs) >> putStr "\nCannot proceed to parsing.\n"
+... | inj₂ r with rewriteRun r
+... | r' with putStrRunIf showParsed r'
+... | sr' = sr' >> putStr (process r')
+
+processArgs : (showParsed : 𝔹) → 𝕃 string → IO ⊤
+processArgs showParsed (input-filename :: []) = (readFiniteFile input-filename) >>= processText showParsed
+processArgs showParsed ("--showParsed" :: xs) = processArgs tt xs
+processArgs showParsed (x :: xs) = putStr ("Unknown option " ^ x ^ "\n")
+processArgs showParsed [] = putStr "Please run with the name of a file to process.\n"
+
+main : IO ⊤
+main = getArgs >>= processArgs ff

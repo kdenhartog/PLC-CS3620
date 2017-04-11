@@ -1,0 +1,385 @@
+Beginning processing of grammar plustimes.
+(Time elapsed: 0.)
+Converted grammar to AST for grammars.
+plustimes
+
+Start
+
+strt
+
+
+
+Syntactic
+
+Posinfo : posinfo -> .
+Strt : strt -> ows expr ows .
+Plus : expr -> expr ows '+' ows expr .
+Times : expr -> expr ows '*' ows expr .
+Id : expr -> id .
+Num : expr -> num .
+Parens : expr -> '(' ows expr ows ')' .
+
+
+Lexical
+
+aws-bar-1 => '\t' .
+aws-bar-1 => ' ' .
+aws-bar-2 => '\n' .
+aws-bar-2 => aws-bar-1 .
+aws => aws-bar-2 .
+ws-plus-3 => aws .
+ws-plus-3 => aws ws-plus-3 .
+ws => ws-plus-3 .
+ows-star-4 => .
+ows-star-4 => aws ows-star-4 .
+ows => ows-star-4 .
+anyDigs-range-5 -> '0' .
+anyDigs-range-5 -> '1' .
+anyDigs-range-5 -> '2' .
+anyDigs-range-5 -> '3' .
+anyDigs-range-5 -> '4' .
+anyDigs-range-5 -> '5' .
+anyDigs-range-5 -> '6' .
+anyDigs-range-5 -> '7' .
+anyDigs-range-5 -> '8' .
+anyDigs-range-5 -> '9' .
+anyDigs-star-6 -> .
+anyDigs-star-6 -> anyDigs-range-5 anyDigs-star-6 .
+anyDigs -> anyDigs-star-6 .
+posDig-range-7 -> '1' .
+posDig-range-7 -> '2' .
+posDig-range-7 -> '3' .
+posDig-range-7 -> '4' .
+posDig-range-7 -> '5' .
+posDig-range-7 -> '6' .
+posDig-range-7 -> '7' .
+posDig-range-7 -> '8' .
+posDig-range-7 -> '9' .
+posDig -> posDig-range-7 .
+numFirstPart-bar-8 -> posDig anyDigs .
+numFirstPart-bar-8 -> '0' .
+numFirstPart -> numFirstPart-bar-8 .
+numSecondPart-bar-9 -> anyDigs posDig .
+numSecondPart-bar-9 -> '0' .
+numSecondPart -> '.' numSecondPart-bar-9 .
+num-opt-10 -> numSecondPart .
+num-opt-10 -> .
+num -> numFirstPart num-opt-10 .
+id-range-11 -> 'a' .
+id-range-11 -> 'b' .
+id-range-11 -> 'c' .
+id-range-11 -> 'd' .
+id-range-11 -> 'e' .
+id-range-11 -> 'f' .
+id-range-11 -> 'g' .
+id-range-11 -> 'h' .
+id-range-11 -> 'i' .
+id-range-11 -> 'j' .
+id-range-11 -> 'k' .
+id-range-11 -> 'l' .
+id-range-11 -> 'm' .
+id-range-11 -> 'n' .
+id-range-11 -> 'o' .
+id-range-11 -> 'p' .
+id-range-11 -> 'q' .
+id-range-11 -> 'r' .
+id-range-11 -> 's' .
+id-range-11 -> 't' .
+id-range-11 -> 'u' .
+id-range-11 -> 'v' .
+id-range-11 -> 'w' .
+id-range-11 -> 'x' .
+id-range-11 -> 'y' .
+id-range-11 -> 'z' .
+id-plus-12 -> id-range-11 .
+id-plus-12 -> id-range-11 id-plus-12 .
+id -> id-plus-12 .
+
+
+Vars
+
+ x3 x2 x1 x0
+
+Rules
+
+0: Plus(Plus(x1, x2), x3) -> Plus(x1, Plus(x2, x3))
+1: Times(Times(x1, x2), x3) -> Times(x1, Times(x2, x3))
+2: Times(Plus(x1, x2), x3) -> Plus(x1, Times(x2, x3))
+3: Times(x1, Plus(x2, x3)) -> Plus(Times(x1, x2), x3)
+
+
+Syntactic non-terminals (defined by syntactic productions):
+  strt posinfo expr 
+
+Reading non-terminals (defined by lexical ->-productions):
+  posDig-range-7 posDig numSecondPart-bar-9 numSecondPart numFirstPart-bar-8 numFirstPart num-opt-10 num id-range-11 id-plus-12 id anyDigs-star-6 anyDigs-range-5 anyDigs 
+
+Recognizing non-terminals (defined by lexical =>-productions):
+  ws-plus-3 ws ows-star-4 ows aws-bar-2 aws-bar-1 aws 
+
+Terminal symbols:
+  'z' 'y' 'x' 'w' 'v' 'u' 't' 's' 'r' 'q' 'p' 'o' 'n' 'm' 'l' 'k' 'j' 'i' 'h' 'g' 'f' 'e' 'd' 'c' 'b' 'a' '\t' '\n' '9' '8' '7' '6' '5' '4' '3' '2' '1' '0' '.' '+' '*' ')' '(' ' ' 
+
+
+
+(The parsing TRS for the grammar is:
+(
+Id:  id[0] -> expr[Id(x0)]
+Num:  num[0] -> expr[Num(x0)]
+P0:  #'\t' -> aws-bar-1[]
+P1:  #' ' -> aws-bar-1[]
+P10:  #ows-star-4 -> ows[]
+P11:  '0' -> anyDigs-range-5[string-append(0, char-to-string('0'))]
+P12:  '1' -> anyDigs-range-5[string-append(0, char-to-string('1'))]
+P13:  '2' -> anyDigs-range-5[string-append(0, char-to-string('2'))]
+P14:  '3' -> anyDigs-range-5[string-append(0, char-to-string('3'))]
+P15:  '4' -> anyDigs-range-5[string-append(0, char-to-string('4'))]
+P16:  '5' -> anyDigs-range-5[string-append(0, char-to-string('5'))]
+P17:  '6' -> anyDigs-range-5[string-append(0, char-to-string('6'))]
+P18:  '7' -> anyDigs-range-5[string-append(0, char-to-string('7'))]
+P19:  '8' -> anyDigs-range-5[string-append(0, char-to-string('8'))]
+P2:  #'\n' -> aws-bar-2[]
+P20:  '9' -> anyDigs-range-5[string-append(0, char-to-string('9'))]
+P21:  -> anyDigs-star-6[empty-string]
+P22:  anyDigs-range-5[0] anyDigs-star-6[1] -> anyDigs-star-6[string-append(1, x0, x1)]
+P23:  anyDigs-star-6[0] -> anyDigs[string-append(0, x0)]
+P24:  '1' -> posDig-range-7[string-append(0, char-to-string('1'))]
+P25:  '2' -> posDig-range-7[string-append(0, char-to-string('2'))]
+P26:  '3' -> posDig-range-7[string-append(0, char-to-string('3'))]
+P27:  '4' -> posDig-range-7[string-append(0, char-to-string('4'))]
+P28:  '5' -> posDig-range-7[string-append(0, char-to-string('5'))]
+P29:  '6' -> posDig-range-7[string-append(0, char-to-string('6'))]
+P3:  #aws-bar-1 -> aws-bar-2[]
+P30:  '7' -> posDig-range-7[string-append(0, char-to-string('7'))]
+P31:  '8' -> posDig-range-7[string-append(0, char-to-string('8'))]
+P32:  '9' -> posDig-range-7[string-append(0, char-to-string('9'))]
+P33:  posDig-range-7[0] -> posDig[string-append(0, x0)]
+P34:  posDig[0] anyDigs[1] -> numFirstPart-bar-8[string-append(1, x0, x1)]
+P35:  '0' -> numFirstPart-bar-8[string-append(0, char-to-string('0'))]
+P36:  numFirstPart-bar-8[0] -> numFirstPart[string-append(0, x0)]
+P37:  anyDigs[0] posDig[1] -> numSecondPart-bar-9[string-append(1, x0, x1)]
+P38:  '0' -> numSecondPart-bar-9[string-append(0, char-to-string('0'))]
+P39:  '.' numSecondPart-bar-9[0] -> numSecondPart[string-append(1, char-to-string('.'), x0)]
+P4:  #aws-bar-2 -> aws[]
+P40:  numSecondPart[0] -> num-opt-10[string-append(0, x0)]
+P41:  -> num-opt-10[empty-string]
+P42:  numFirstPart[0] num-opt-10[1] -> num[string-append(1, x0, x1)]
+P43:  'a' -> id-range-11[string-append(0, char-to-string('a'))]
+P44:  'b' -> id-range-11[string-append(0, char-to-string('b'))]
+P45:  'c' -> id-range-11[string-append(0, char-to-string('c'))]
+P46:  'd' -> id-range-11[string-append(0, char-to-string('d'))]
+P47:  'e' -> id-range-11[string-append(0, char-to-string('e'))]
+P48:  'f' -> id-range-11[string-append(0, char-to-string('f'))]
+P49:  'g' -> id-range-11[string-append(0, char-to-string('g'))]
+P5:  #aws -> ws-plus-3[]
+P50:  'h' -> id-range-11[string-append(0, char-to-string('h'))]
+P51:  'i' -> id-range-11[string-append(0, char-to-string('i'))]
+P52:  'j' -> id-range-11[string-append(0, char-to-string('j'))]
+P53:  'k' -> id-range-11[string-append(0, char-to-string('k'))]
+P54:  'l' -> id-range-11[string-append(0, char-to-string('l'))]
+P55:  'm' -> id-range-11[string-append(0, char-to-string('m'))]
+P56:  'n' -> id-range-11[string-append(0, char-to-string('n'))]
+P57:  'o' -> id-range-11[string-append(0, char-to-string('o'))]
+P58:  'p' -> id-range-11[string-append(0, char-to-string('p'))]
+P59:  'q' -> id-range-11[string-append(0, char-to-string('q'))]
+P6:  #aws #ws-plus-3 -> ws-plus-3[]
+P60:  'r' -> id-range-11[string-append(0, char-to-string('r'))]
+P61:  's' -> id-range-11[string-append(0, char-to-string('s'))]
+P62:  't' -> id-range-11[string-append(0, char-to-string('t'))]
+P63:  'u' -> id-range-11[string-append(0, char-to-string('u'))]
+P64:  'v' -> id-range-11[string-append(0, char-to-string('v'))]
+P65:  'w' -> id-range-11[string-append(0, char-to-string('w'))]
+P66:  'x' -> id-range-11[string-append(0, char-to-string('x'))]
+P67:  'y' -> id-range-11[string-append(0, char-to-string('y'))]
+P68:  'z' -> id-range-11[string-append(0, char-to-string('z'))]
+P69:  id-range-11[0] -> id-plus-12[string-append(0, x0)]
+P7:  #ws-plus-3 -> ws[]
+P70:  id-range-11[0] id-plus-12[1] -> id-plus-12[string-append(1, x0, x1)]
+P71:  id-plus-12[0] -> id[string-append(0, x0)]
+P8:  -> ows-star-4[]
+P9:  #aws #ows-star-4 -> ows-star-4[]
+Parens:  #'(' #ows expr[0] #ows #')' -> expr[Parens(x0)]
+Plus:  expr[0] #ows #'+' #ows expr[1] -> expr[Plus(x0, x1)]
+Posinfo:  -> posinfo[Posinfo]
+Strt:  #ows expr[0] #ows -> strt[Strt(x0)]
+Times:  expr[0] #ows #'*' #ows expr[1] -> expr[Times(x0, x1)]
+)
+)
+(The reorganizing TRS is terminating.)
+(Derivational complexity of the reorganizing TRS: O(n^4))
+(Local confluence of the reorganizing TRS: true)
+
+(Time elapsed: 0.024)
+Found nullable (anyDigs-star-6, P21)
+Found nullable (anyDigs, P23)
+Found nullable (num-opt-10, P41)
+Found nullable (ows-star-4, P8)
+Found nullable (posinfo, Posinfo)
+Found nullable (ows, P10)
+)
+(The parsing TRS that arises from the final automaton:
+(
+Id:  id[0] -> expr[Id(x0)]
+Num:  num[0] -> expr[Num(x0)]
+P0:  #'\t' -> aws-bar-1[]
+P1:  #' ' -> aws-bar-1[]
+P10:  #ows-star-4 -> ows[]
+P11:  '0' -> anyDigs-range-5[string-append(0, char-to-string('0'))]
+P12:  '1' -> anyDigs-range-5[string-append(0, char-to-string('1'))]
+P13:  '2' -> anyDigs-range-5[string-append(0, char-to-string('2'))]
+P14:  '3' -> anyDigs-range-5[string-append(0, char-to-string('3'))]
+P15:  '4' -> anyDigs-range-5[string-append(0, char-to-string('4'))]
+P16:  '5' -> anyDigs-range-5[string-append(0, char-to-string('5'))]
+P17:  '6' -> anyDigs-range-5[string-append(0, char-to-string('6'))]
+P18:  '7' -> anyDigs-range-5[string-append(0, char-to-string('7'))]
+P19:  '8' -> anyDigs-range-5[string-append(0, char-to-string('8'))]
+P2:  #'\n' -> aws-bar-2[]
+P20:  '9' -> anyDigs-range-5[string-append(0, char-to-string('9'))]
+P21:  -> anyDigs-star-6[empty-string]
+P22:  anyDigs-range-5[0] anyDigs-star-6[1] -> anyDigs-star-6[string-append(1, x0, x1)]
+P23:  anyDigs-star-6[0] -> anyDigs[string-append(0, x0)]
+P24:  '1' -> posDig-range-7[string-append(0, char-to-string('1'))]
+P25:  '2' -> posDig-range-7[string-append(0, char-to-string('2'))]
+P26:  '3' -> posDig-range-7[string-append(0, char-to-string('3'))]
+P27:  '4' -> posDig-range-7[string-append(0, char-to-string('4'))]
+P28:  '5' -> posDig-range-7[string-append(0, char-to-string('5'))]
+P29:  '6' -> posDig-range-7[string-append(0, char-to-string('6'))]
+P3:  #aws-bar-1 -> aws-bar-2[]
+P30:  '7' -> posDig-range-7[string-append(0, char-to-string('7'))]
+P31:  '8' -> posDig-range-7[string-append(0, char-to-string('8'))]
+P32:  '9' -> posDig-range-7[string-append(0, char-to-string('9'))]
+P33:  posDig-range-7[0] -> posDig[string-append(0, x0)]
+P34:  posDig[0] anyDigs[1] -> numFirstPart-bar-8[string-append(1, x0, x1)]
+P35:  '0' -> numFirstPart-bar-8[string-append(0, char-to-string('0'))]
+P36:  numFirstPart-bar-8[0] -> numFirstPart[string-append(0, x0)]
+P37:  anyDigs[0] posDig[1] -> numSecondPart-bar-9[string-append(1, x0, x1)]
+P38:  '0' -> numSecondPart-bar-9[string-append(0, char-to-string('0'))]
+P39:  '.' numSecondPart-bar-9[0] -> numSecondPart[string-append(1, char-to-string('.'), x0)]
+P4:  #aws-bar-2 -> aws[]
+P40:  numSecondPart[0] -> num-opt-10[string-append(0, x0)]
+P41:  -> num-opt-10[empty-string]
+P42:  numFirstPart[0] num-opt-10[1] -> num[string-append(1, x0, x1)]
+P43:  'a' -> id-range-11[string-append(0, char-to-string('a'))]
+P44:  'b' -> id-range-11[string-append(0, char-to-string('b'))]
+P45:  'c' -> id-range-11[string-append(0, char-to-string('c'))]
+P46:  'd' -> id-range-11[string-append(0, char-to-string('d'))]
+P47:  'e' -> id-range-11[string-append(0, char-to-string('e'))]
+P48:  'f' -> id-range-11[string-append(0, char-to-string('f'))]
+P49:  'g' -> id-range-11[string-append(0, char-to-string('g'))]
+P5:  #aws -> ws-plus-3[]
+P50:  'h' -> id-range-11[string-append(0, char-to-string('h'))]
+P51:  'i' -> id-range-11[string-append(0, char-to-string('i'))]
+P52:  'j' -> id-range-11[string-append(0, char-to-string('j'))]
+P53:  'k' -> id-range-11[string-append(0, char-to-string('k'))]
+P54:  'l' -> id-range-11[string-append(0, char-to-string('l'))]
+P55:  'm' -> id-range-11[string-append(0, char-to-string('m'))]
+P56:  'n' -> id-range-11[string-append(0, char-to-string('n'))]
+P57:  'o' -> id-range-11[string-append(0, char-to-string('o'))]
+P58:  'p' -> id-range-11[string-append(0, char-to-string('p'))]
+P59:  'q' -> id-range-11[string-append(0, char-to-string('q'))]
+P6:  #aws #ws-plus-3 -> ws-plus-3[]
+P60:  'r' -> id-range-11[string-append(0, char-to-string('r'))]
+P61:  's' -> id-range-11[string-append(0, char-to-string('s'))]
+P62:  't' -> id-range-11[string-append(0, char-to-string('t'))]
+P63:  'u' -> id-range-11[string-append(0, char-to-string('u'))]
+P64:  'v' -> id-range-11[string-append(0, char-to-string('v'))]
+P65:  'w' -> id-range-11[string-append(0, char-to-string('w'))]
+P66:  'x' -> id-range-11[string-append(0, char-to-string('x'))]
+P67:  'y' -> id-range-11[string-append(0, char-to-string('y'))]
+P68:  'z' -> id-range-11[string-append(0, char-to-string('z'))]
+P69:  id-range-11[0] -> id-plus-12[string-append(0, x0)]
+P7:  #ws-plus-3 -> ws[]
+P70:  id-range-11[0] id-plus-12[1] -> id-plus-12[string-append(1, x0, x1)]
+P71:  id-plus-12[0] -> id[string-append(0, x0)]
+P8:  -> ows-star-4[]
+P9:  #aws #ows-star-4 -> ows-star-4[]
+Parens:  #'(' #ows expr[0] #ows #')' -> expr[Parens(x0)]
+Plus:  expr[0] #ows #'+' #ows expr[1] -> expr[Plus(x0, x1)]
+Posinfo:  -> posinfo[Posinfo]
+Strt:  #ows expr[0] #ows -> strt[Strt(x0)]
+Times:  expr[0] #ows #'*' #ows expr[1] -> expr[Times(x0, x1)]
+)
+)
+(The TRS corresponding to the final parsing TRS:
+Id: Id . id(x0) . x1 -> expr(Id(x0)) . x1
+Num: Num . num(x0) . x1 -> expr(Num(x0)) . x1
+P0: P0 . '\t' . x1 -> aws-bar-1 . x1
+P1: P1 . ' ' . x1 -> aws-bar-1 . x1
+P10: P10 . ows-star-4 . x1 -> ows . x1
+P11: P11 . '0' . x1 -> anyDigs-range-5(string-append(0, char-to-string('0'))) . x1
+P12: P12 . '1' . x1 -> anyDigs-range-5(string-append(0, char-to-string('1'))) . x1
+P13: P13 . '2' . x1 -> anyDigs-range-5(string-append(0, char-to-string('2'))) . x1
+P14: P14 . '3' . x1 -> anyDigs-range-5(string-append(0, char-to-string('3'))) . x1
+P15: P15 . '4' . x1 -> anyDigs-range-5(string-append(0, char-to-string('4'))) . x1
+P16: P16 . '5' . x1 -> anyDigs-range-5(string-append(0, char-to-string('5'))) . x1
+P17: P17 . '6' . x1 -> anyDigs-range-5(string-append(0, char-to-string('6'))) . x1
+P18: P18 . '7' . x1 -> anyDigs-range-5(string-append(0, char-to-string('7'))) . x1
+P19: P19 . '8' . x1 -> anyDigs-range-5(string-append(0, char-to-string('8'))) . x1
+P2: P2 . '\n' . x1 -> aws-bar-2 . x1
+P20: P20 . '9' . x1 -> anyDigs-range-5(string-append(0, char-to-string('9'))) . x1
+P21: P21 . x1 -> anyDigs-star-6(empty-string) . x1
+P22: P22 . anyDigs-range-5(x0) . anyDigs-star-6(x1) . x2 -> anyDigs-star-6(string-append(1, x0, x1)) . x2
+P23: P23 . anyDigs-star-6(x0) . x1 -> anyDigs(string-append(0, x0)) . x1
+P24: P24 . '1' . x1 -> posDig-range-7(string-append(0, char-to-string('1'))) . x1
+P25: P25 . '2' . x1 -> posDig-range-7(string-append(0, char-to-string('2'))) . x1
+P26: P26 . '3' . x1 -> posDig-range-7(string-append(0, char-to-string('3'))) . x1
+P27: P27 . '4' . x1 -> posDig-range-7(string-append(0, char-to-string('4'))) . x1
+P28: P28 . '5' . x1 -> posDig-range-7(string-append(0, char-to-string('5'))) . x1
+P29: P29 . '6' . x1 -> posDig-range-7(string-append(0, char-to-string('6'))) . x1
+P3: P3 . aws-bar-1 . x1 -> aws-bar-2 . x1
+P30: P30 . '7' . x1 -> posDig-range-7(string-append(0, char-to-string('7'))) . x1
+P31: P31 . '8' . x1 -> posDig-range-7(string-append(0, char-to-string('8'))) . x1
+P32: P32 . '9' . x1 -> posDig-range-7(string-append(0, char-to-string('9'))) . x1
+P33: P33 . posDig-range-7(x0) . x1 -> posDig(string-append(0, x0)) . x1
+P34: P34 . posDig(x0) . anyDigs(x1) . x2 -> numFirstPart-bar-8(string-append(1, x0, x1)) . x2
+P35: P35 . '0' . x1 -> numFirstPart-bar-8(string-append(0, char-to-string('0'))) . x1
+P36: P36 . numFirstPart-bar-8(x0) . x1 -> numFirstPart(string-append(0, x0)) . x1
+P37: P37 . anyDigs(x0) . posDig(x1) . x2 -> numSecondPart-bar-9(string-append(1, x0, x1)) . x2
+P38: P38 . '0' . x1 -> numSecondPart-bar-9(string-append(0, char-to-string('0'))) . x1
+P39: P39 . '.' . numSecondPart-bar-9(x0) . x1 -> numSecondPart(string-append(1, char-to-string('.'), x0)) . x1
+P4: P4 . aws-bar-2 . x1 -> aws . x1
+P40: P40 . numSecondPart(x0) . x1 -> num-opt-10(string-append(0, x0)) . x1
+P41: P41 . x1 -> num-opt-10(empty-string) . x1
+P42: P42 . numFirstPart(x0) . num-opt-10(x1) . x2 -> num(string-append(1, x0, x1)) . x2
+P43: P43 . 'a' . x1 -> id-range-11(string-append(0, char-to-string('a'))) . x1
+P44: P44 . 'b' . x1 -> id-range-11(string-append(0, char-to-string('b'))) . x1
+P45: P45 . 'c' . x1 -> id-range-11(string-append(0, char-to-string('c'))) . x1
+P46: P46 . 'd' . x1 -> id-range-11(string-append(0, char-to-string('d'))) . x1
+P47: P47 . 'e' . x1 -> id-range-11(string-append(0, char-to-string('e'))) . x1
+P48: P48 . 'f' . x1 -> id-range-11(string-append(0, char-to-string('f'))) . x1
+P49: P49 . 'g' . x1 -> id-range-11(string-append(0, char-to-string('g'))) . x1
+P5: P5 . aws . x1 -> ws-plus-3 . x1
+P50: P50 . 'h' . x1 -> id-range-11(string-append(0, char-to-string('h'))) . x1
+P51: P51 . 'i' . x1 -> id-range-11(string-append(0, char-to-string('i'))) . x1
+P52: P52 . 'j' . x1 -> id-range-11(string-append(0, char-to-string('j'))) . x1
+P53: P53 . 'k' . x1 -> id-range-11(string-append(0, char-to-string('k'))) . x1
+P54: P54 . 'l' . x1 -> id-range-11(string-append(0, char-to-string('l'))) . x1
+P55: P55 . 'm' . x1 -> id-range-11(string-append(0, char-to-string('m'))) . x1
+P56: P56 . 'n' . x1 -> id-range-11(string-append(0, char-to-string('n'))) . x1
+P57: P57 . 'o' . x1 -> id-range-11(string-append(0, char-to-string('o'))) . x1
+P58: P58 . 'p' . x1 -> id-range-11(string-append(0, char-to-string('p'))) . x1
+P59: P59 . 'q' . x1 -> id-range-11(string-append(0, char-to-string('q'))) . x1
+P6: P6 . aws . ws-plus-3 . x1 -> ws-plus-3 . x1
+P60: P60 . 'r' . x1 -> id-range-11(string-append(0, char-to-string('r'))) . x1
+P61: P61 . 's' . x1 -> id-range-11(string-append(0, char-to-string('s'))) . x1
+P62: P62 . 't' . x1 -> id-range-11(string-append(0, char-to-string('t'))) . x1
+P63: P63 . 'u' . x1 -> id-range-11(string-append(0, char-to-string('u'))) . x1
+P64: P64 . 'v' . x1 -> id-range-11(string-append(0, char-to-string('v'))) . x1
+P65: P65 . 'w' . x1 -> id-range-11(string-append(0, char-to-string('w'))) . x1
+P66: P66 . 'x' . x1 -> id-range-11(string-append(0, char-to-string('x'))) . x1
+P67: P67 . 'y' . x1 -> id-range-11(string-append(0, char-to-string('y'))) . x1
+P68: P68 . 'z' . x1 -> id-range-11(string-append(0, char-to-string('z'))) . x1
+P69: P69 . id-range-11(x0) . x1 -> id-plus-12(string-append(0, x0)) . x1
+P7: P7 . ws-plus-3 . x1 -> ws . x1
+P70: P70 . id-range-11(x0) . id-plus-12(x1) . x2 -> id-plus-12(string-append(1, x0, x1)) . x2
+P71: P71 . id-plus-12(x0) . x1 -> id(string-append(0, x0)) . x1
+P8: P8 . x1 -> ows-star-4 . x1
+P9: P9 . aws . ows-star-4 . x1 -> ows-star-4 . x1
+Parens: Parens . '(' . ows . expr(x0) . ows . ')' . x1 -> expr(Parens(x0)) . x1
+Plus: expr(x0) . ows . '+' . ows . expr(x1) . x2 -> expr(Plus(x0, x1)) . x2
+Posinfo: Posinfo . x1 -> posinfo(Posinfo) . x1
+Strt: Strt . ows . expr(x0) . ows . Strt_end . x1 -> strt(Strt(x0)) . x1
+Times: expr(x0) . ows . '*' . ows . expr(x1) . x2 -> expr(Times(x0, x1)) . x2
+)
+(No reorganizing critical pairs found.)
+(No parsing critical pairs found.)

@@ -1,0 +1,22 @@
+memgraph
+
+Start
+
+strt
+
+Syntactic
+
+strt -> ows 'ROOTS:' ws idlist ws 'GRAPH:' ws idlist .
+
+NextIdList : idlist -> ids ws idlist .
+LastIdList : idlist -> ids .
+
+node: ids -> id .
+edge: ids -> id ws '->' ws idlist ows ';' .
+
+Lexical
+
+aws => ('\n' | '\t' | space ).
+ws => aws+.
+ows => aws*.
+id -> ['a' - 'z' '0' - '9']+.

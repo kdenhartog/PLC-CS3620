@@ -1,0 +1,73 @@
+gra2srs
+
+line_comment = "%" .
+
+Grammar : grammar -> ID START ID [ WHITESPACE ID ] [ SYNTACTIC { prod }* ] [ LEXICAL { lex }* ] [VARS { ID }*] [RULES { rule }*] . 
+
+PrimId : prim -> ID .
+PrimStringLit : prim -> STRING_LIT .
+
+(************************************************)
+(* productions                                  *)
+(************************************************)
+
+Prod : prod -> ID COLON ID ARROW [form] DOT . 
+ProdUnnamed : prod -> ID ARROW [form] DOT . 
+Lex : lex -> ID lex_op [form] DOT . 
+
+LexArrow : lex_op -> ARROW .
+LexThickArrow : lex_op -> THICKARROW.
+
+Bar : form -> forma BAR form .
+Forma : form -> forma .
+
+Seq : forma -> { atom }+ .
+
+Id : atom -> prim post.
+Charset : atom -> [ TILDE ] LS { charset_prim }* RS post .
+Range : charset_prim -> STRING_LIT MINUS STRING_LIT .
+Char : charset_prim -> STRING_LIT.
+Marker : atom -> BANG.
+
+Paren : atom -> LP form RP post.
+
+Star : post -> STAR .
+Plus : post -> PLUS .
+Qmark : post -> QMARK .
+Plain : post ->  .
+
+(************************************************)
+(* terms and rules                              *)
+(************************************************)
+Rule : rule -> term ARROW term .
+
+App : term -> ID LP args RP .
+Sym : term -> ID .
+
+Empty : args -> .
+Args : args -> term { COMMA term } * .
+
+BANG = "!" .
+ARROW = "->" .
+THICKARROW = "=>" .
+BAR = "|" . 
+STAR = "*" . 
+PLUS = "+" . 
+QMARK = "?" . 
+DOT = "." . 
+LP = "(" . 
+RP = ")" . 
+LS = "[" . 
+RS = "]" . 
+TILDE = "~" . 
+MINUS = "-" . 
+COMMA = "," . 
+COLON = ":" . 
+START = "Start" . 
+WHITESPACE = "Whitespace" . 
+SYNTACTIC = "Syntactic" . 
+LEXICAL = "Lexical" . 
+VARS = "Vars" . 
+RULES = "Rules" . 
+ID = {{['a'-'z' 'A'-'Z']['a'-'z' 'A'-'Z' '_' '-' '0'-'9']*}} .
+STRING_LIT = {{('\''[^ '\'' ' ']+'\'')}} .

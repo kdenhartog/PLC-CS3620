@@ -1,0 +1,286 @@
+Beginning processing of grammar memgraph.
+(Time elapsed: 0.)
+Converted grammar to AST for grammars.
+memgraph
+
+Start
+
+strt
+
+
+
+Syntactic
+
+Posinfo : posinfo -> .
+Strt : strt -> ows 'R' 'O' 'O' 'T' 'S' ':' ws idlist ws 'G' 'R' 'A' 'P' 'H' ':' ws idlist .
+NextIdList : idlist -> ids ws idlist .
+LastIdList : idlist -> ids .
+node : ids -> id .
+edge : ids -> id ws '-' '>' ws idlist ows ';' .
+
+
+Lexical
+
+aws-bar-1 => '\t' .
+aws-bar-1 => ' ' .
+aws-bar-2 => '\n' .
+aws-bar-2 => aws-bar-1 .
+aws => aws-bar-2 .
+ws-plus-3 => aws .
+ws-plus-3 => aws ws-plus-3 .
+ws => ws-plus-3 .
+ows-star-4 => .
+ows-star-4 => aws ows-star-4 .
+ows => ows-star-4 .
+id-range-5 -> '0' .
+id-range-5 -> '1' .
+id-range-5 -> '2' .
+id-range-5 -> '3' .
+id-range-5 -> '4' .
+id-range-5 -> '5' .
+id-range-5 -> '6' .
+id-range-5 -> '7' .
+id-range-5 -> '8' .
+id-range-5 -> '9' .
+id-range-5 -> 'a' .
+id-range-5 -> 'b' .
+id-range-5 -> 'c' .
+id-range-5 -> 'd' .
+id-range-5 -> 'e' .
+id-range-5 -> 'f' .
+id-range-5 -> 'g' .
+id-range-5 -> 'h' .
+id-range-5 -> 'i' .
+id-range-5 -> 'j' .
+id-range-5 -> 'k' .
+id-range-5 -> 'l' .
+id-range-5 -> 'm' .
+id-range-5 -> 'n' .
+id-range-5 -> 'o' .
+id-range-5 -> 'p' .
+id-range-5 -> 'q' .
+id-range-5 -> 'r' .
+id-range-5 -> 's' .
+id-range-5 -> 't' .
+id-range-5 -> 'u' .
+id-range-5 -> 'v' .
+id-range-5 -> 'w' .
+id-range-5 -> 'x' .
+id-range-5 -> 'y' .
+id-range-5 -> 'z' .
+id-plus-6 -> id-range-5 .
+id-plus-6 -> id-range-5 id-plus-6 .
+id -> id-plus-6 .
+
+
+Vars
+
+ x0
+
+Rules
+
+
+
+Syntactic non-terminals (defined by syntactic productions):
+  strt posinfo ids idlist 
+
+Reading non-terminals (defined by lexical ->-productions):
+  id-range-5 id-plus-6 id 
+
+Recognizing non-terminals (defined by lexical =>-productions):
+  ws-plus-3 ws ows-star-4 ows aws-bar-2 aws-bar-1 aws 
+
+Terminal symbols:
+  'z' 'y' 'x' 'w' 'v' 'u' 't' 's' 'r' 'q' 'p' 'o' 'n' 'm' 'l' 'k' 'j' 'i' 'h' 'g' 'f' 'e' 'd' 'c' 'b' 'a' '\t' '\n' 'T' 'S' 'R' 'P' 'O' 'H' 'G' 'A' '>' ';' ':' '9' '8' '7' '6' '5' '4' '3' '2' '1' '0' '-' ' ' 
+
+
+
+(The parsing TRS for the grammar is:
+(
+LastIdList:  ids[0] -> idlist[LastIdList(x0)]
+NextIdList:  ids[0] #ws idlist[1] -> idlist[NextIdList(x0, x1)]
+P0:  #'\t' -> aws-bar-1[]
+P1:  #' ' -> aws-bar-1[]
+P10:  #ows-star-4 -> ows[]
+P11:  '0' -> id-range-5[string-append(0, char-to-string('0'))]
+P12:  '1' -> id-range-5[string-append(0, char-to-string('1'))]
+P13:  '2' -> id-range-5[string-append(0, char-to-string('2'))]
+P14:  '3' -> id-range-5[string-append(0, char-to-string('3'))]
+P15:  '4' -> id-range-5[string-append(0, char-to-string('4'))]
+P16:  '5' -> id-range-5[string-append(0, char-to-string('5'))]
+P17:  '6' -> id-range-5[string-append(0, char-to-string('6'))]
+P18:  '7' -> id-range-5[string-append(0, char-to-string('7'))]
+P19:  '8' -> id-range-5[string-append(0, char-to-string('8'))]
+P2:  #'\n' -> aws-bar-2[]
+P20:  '9' -> id-range-5[string-append(0, char-to-string('9'))]
+P21:  'a' -> id-range-5[string-append(0, char-to-string('a'))]
+P22:  'b' -> id-range-5[string-append(0, char-to-string('b'))]
+P23:  'c' -> id-range-5[string-append(0, char-to-string('c'))]
+P24:  'd' -> id-range-5[string-append(0, char-to-string('d'))]
+P25:  'e' -> id-range-5[string-append(0, char-to-string('e'))]
+P26:  'f' -> id-range-5[string-append(0, char-to-string('f'))]
+P27:  'g' -> id-range-5[string-append(0, char-to-string('g'))]
+P28:  'h' -> id-range-5[string-append(0, char-to-string('h'))]
+P29:  'i' -> id-range-5[string-append(0, char-to-string('i'))]
+P3:  #aws-bar-1 -> aws-bar-2[]
+P30:  'j' -> id-range-5[string-append(0, char-to-string('j'))]
+P31:  'k' -> id-range-5[string-append(0, char-to-string('k'))]
+P32:  'l' -> id-range-5[string-append(0, char-to-string('l'))]
+P33:  'm' -> id-range-5[string-append(0, char-to-string('m'))]
+P34:  'n' -> id-range-5[string-append(0, char-to-string('n'))]
+P35:  'o' -> id-range-5[string-append(0, char-to-string('o'))]
+P36:  'p' -> id-range-5[string-append(0, char-to-string('p'))]
+P37:  'q' -> id-range-5[string-append(0, char-to-string('q'))]
+P38:  'r' -> id-range-5[string-append(0, char-to-string('r'))]
+P39:  's' -> id-range-5[string-append(0, char-to-string('s'))]
+P4:  #aws-bar-2 -> aws[]
+P40:  't' -> id-range-5[string-append(0, char-to-string('t'))]
+P41:  'u' -> id-range-5[string-append(0, char-to-string('u'))]
+P42:  'v' -> id-range-5[string-append(0, char-to-string('v'))]
+P43:  'w' -> id-range-5[string-append(0, char-to-string('w'))]
+P44:  'x' -> id-range-5[string-append(0, char-to-string('x'))]
+P45:  'y' -> id-range-5[string-append(0, char-to-string('y'))]
+P46:  'z' -> id-range-5[string-append(0, char-to-string('z'))]
+P47:  id-range-5[0] -> id-plus-6[string-append(0, x0)]
+P48:  id-range-5[0] id-plus-6[1] -> id-plus-6[string-append(1, x0, x1)]
+P49:  id-plus-6[0] -> id[string-append(0, x0)]
+P5:  #aws -> ws-plus-3[]
+P6:  #aws #ws-plus-3 -> ws-plus-3[]
+P7:  #ws-plus-3 -> ws[]
+P8:  -> ows-star-4[]
+P9:  #aws #ows-star-4 -> ows-star-4[]
+Posinfo:  -> posinfo[Posinfo]
+Strt:  #ows #'R' #'O' #'O' #'T' #'S' #':' #ws idlist[0] #ws #'G' #'R' #'A' #'P' #'H' #':' #ws idlist[1] -> strt[Strt(x0, x1)]
+edge:  id[0] #ws #'-' #'>' #ws idlist[1] #ows #';' -> ids[edge(x0, x1)]
+node:  id[0] -> ids[node(x0)]
+)
+)
+(The reorganizing TRS is terminating.)
+(Derivational complexity of the reorganizing TRS: O(n^0))
+(Local confluence of the reorganizing TRS: true)
+
+(Time elapsed: 0.007)
+Found nullable (ows-star-4, P8)
+Found nullable (posinfo, Posinfo)
+Found nullable (ows, P10)
+)
+(The parsing TRS that arises from the final automaton:
+(
+LastIdList:  ids[0] -> idlist[LastIdList(x0)]
+NextIdList:  ids[0] #ws idlist[1] -> idlist[NextIdList(x0, x1)]
+P0:  #'\t' -> aws-bar-1[]
+P1:  #' ' -> aws-bar-1[]
+P10:  #ows-star-4 -> ows[]
+P11:  '0' -> id-range-5[string-append(0, char-to-string('0'))]
+P12:  '1' -> id-range-5[string-append(0, char-to-string('1'))]
+P13:  '2' -> id-range-5[string-append(0, char-to-string('2'))]
+P14:  '3' -> id-range-5[string-append(0, char-to-string('3'))]
+P15:  '4' -> id-range-5[string-append(0, char-to-string('4'))]
+P16:  '5' -> id-range-5[string-append(0, char-to-string('5'))]
+P17:  '6' -> id-range-5[string-append(0, char-to-string('6'))]
+P18:  '7' -> id-range-5[string-append(0, char-to-string('7'))]
+P19:  '8' -> id-range-5[string-append(0, char-to-string('8'))]
+P2:  #'\n' -> aws-bar-2[]
+P20:  '9' -> id-range-5[string-append(0, char-to-string('9'))]
+P21:  'a' -> id-range-5[string-append(0, char-to-string('a'))]
+P22:  'b' -> id-range-5[string-append(0, char-to-string('b'))]
+P23:  'c' -> id-range-5[string-append(0, char-to-string('c'))]
+P24:  'd' -> id-range-5[string-append(0, char-to-string('d'))]
+P25:  'e' -> id-range-5[string-append(0, char-to-string('e'))]
+P26:  'f' -> id-range-5[string-append(0, char-to-string('f'))]
+P27:  'g' -> id-range-5[string-append(0, char-to-string('g'))]
+P28:  'h' -> id-range-5[string-append(0, char-to-string('h'))]
+P29:  'i' -> id-range-5[string-append(0, char-to-string('i'))]
+P3:  #aws-bar-1 -> aws-bar-2[]
+P30:  'j' -> id-range-5[string-append(0, char-to-string('j'))]
+P31:  'k' -> id-range-5[string-append(0, char-to-string('k'))]
+P32:  'l' -> id-range-5[string-append(0, char-to-string('l'))]
+P33:  'm' -> id-range-5[string-append(0, char-to-string('m'))]
+P34:  'n' -> id-range-5[string-append(0, char-to-string('n'))]
+P35:  'o' -> id-range-5[string-append(0, char-to-string('o'))]
+P36:  'p' -> id-range-5[string-append(0, char-to-string('p'))]
+P37:  'q' -> id-range-5[string-append(0, char-to-string('q'))]
+P38:  'r' -> id-range-5[string-append(0, char-to-string('r'))]
+P39:  's' -> id-range-5[string-append(0, char-to-string('s'))]
+P4:  #aws-bar-2 -> aws[]
+P40:  't' -> id-range-5[string-append(0, char-to-string('t'))]
+P41:  'u' -> id-range-5[string-append(0, char-to-string('u'))]
+P42:  'v' -> id-range-5[string-append(0, char-to-string('v'))]
+P43:  'w' -> id-range-5[string-append(0, char-to-string('w'))]
+P44:  'x' -> id-range-5[string-append(0, char-to-string('x'))]
+P45:  'y' -> id-range-5[string-append(0, char-to-string('y'))]
+P46:  'z' -> id-range-5[string-append(0, char-to-string('z'))]
+P47:  id-range-5[0] -> id-plus-6[string-append(0, x0)]
+P48:  id-range-5[0] id-plus-6[1] -> id-plus-6[string-append(1, x0, x1)]
+P49:  id-plus-6[0] -> id[string-append(0, x0)]
+P5:  #aws -> ws-plus-3[]
+P6:  #aws #ws-plus-3 -> ws-plus-3[]
+P7:  #ws-plus-3 -> ws[]
+P8:  -> ows-star-4[]
+P9:  #aws #ows-star-4 -> ows-star-4[]
+Posinfo:  -> posinfo[Posinfo]
+Strt:  #ows #'R' #'O' #'O' #'T' #'S' #':' #ws idlist[0] #ws #'G' #'R' #'A' #'P' #'H' #':' #ws idlist[1] -> strt[Strt(x0, x1)]
+edge:  id[0] #ws #'-' #'>' #ws idlist[1] #ows #';' -> ids[edge(x0, x1)]
+node:  id[0] -> ids[node(x0)]
+)
+)
+(The TRS corresponding to the final parsing TRS:
+LastIdList: LastIdList . ids(x0) . x1 -> idlist(LastIdList(x0)) . x1
+NextIdList: NextIdList . ids(x0) . ws . idlist(x1) . x2 -> idlist(NextIdList(x0, x1)) . x2
+P0: P0 . '\t' . x1 -> aws-bar-1 . x1
+P1: P1 . ' ' . x1 -> aws-bar-1 . x1
+P10: P10 . ows-star-4 . x1 -> ows . x1
+P11: P11 . '0' . x1 -> id-range-5(string-append(0, char-to-string('0'))) . x1
+P12: P12 . '1' . x1 -> id-range-5(string-append(0, char-to-string('1'))) . x1
+P13: P13 . '2' . x1 -> id-range-5(string-append(0, char-to-string('2'))) . x1
+P14: P14 . '3' . x1 -> id-range-5(string-append(0, char-to-string('3'))) . x1
+P15: P15 . '4' . x1 -> id-range-5(string-append(0, char-to-string('4'))) . x1
+P16: P16 . '5' . x1 -> id-range-5(string-append(0, char-to-string('5'))) . x1
+P17: P17 . '6' . x1 -> id-range-5(string-append(0, char-to-string('6'))) . x1
+P18: P18 . '7' . x1 -> id-range-5(string-append(0, char-to-string('7'))) . x1
+P19: P19 . '8' . x1 -> id-range-5(string-append(0, char-to-string('8'))) . x1
+P2: P2 . '\n' . x1 -> aws-bar-2 . x1
+P20: P20 . '9' . x1 -> id-range-5(string-append(0, char-to-string('9'))) . x1
+P21: P21 . 'a' . x1 -> id-range-5(string-append(0, char-to-string('a'))) . x1
+P22: P22 . 'b' . x1 -> id-range-5(string-append(0, char-to-string('b'))) . x1
+P23: P23 . 'c' . x1 -> id-range-5(string-append(0, char-to-string('c'))) . x1
+P24: P24 . 'd' . x1 -> id-range-5(string-append(0, char-to-string('d'))) . x1
+P25: P25 . 'e' . x1 -> id-range-5(string-append(0, char-to-string('e'))) . x1
+P26: P26 . 'f' . x1 -> id-range-5(string-append(0, char-to-string('f'))) . x1
+P27: P27 . 'g' . x1 -> id-range-5(string-append(0, char-to-string('g'))) . x1
+P28: P28 . 'h' . x1 -> id-range-5(string-append(0, char-to-string('h'))) . x1
+P29: P29 . 'i' . x1 -> id-range-5(string-append(0, char-to-string('i'))) . x1
+P3: P3 . aws-bar-1 . x1 -> aws-bar-2 . x1
+P30: P30 . 'j' . x1 -> id-range-5(string-append(0, char-to-string('j'))) . x1
+P31: P31 . 'k' . x1 -> id-range-5(string-append(0, char-to-string('k'))) . x1
+P32: P32 . 'l' . x1 -> id-range-5(string-append(0, char-to-string('l'))) . x1
+P33: P33 . 'm' . x1 -> id-range-5(string-append(0, char-to-string('m'))) . x1
+P34: P34 . 'n' . x1 -> id-range-5(string-append(0, char-to-string('n'))) . x1
+P35: P35 . 'o' . x1 -> id-range-5(string-append(0, char-to-string('o'))) . x1
+P36: P36 . 'p' . x1 -> id-range-5(string-append(0, char-to-string('p'))) . x1
+P37: P37 . 'q' . x1 -> id-range-5(string-append(0, char-to-string('q'))) . x1
+P38: P38 . 'r' . x1 -> id-range-5(string-append(0, char-to-string('r'))) . x1
+P39: P39 . 's' . x1 -> id-range-5(string-append(0, char-to-string('s'))) . x1
+P4: P4 . aws-bar-2 . x1 -> aws . x1
+P40: P40 . 't' . x1 -> id-range-5(string-append(0, char-to-string('t'))) . x1
+P41: P41 . 'u' . x1 -> id-range-5(string-append(0, char-to-string('u'))) . x1
+P42: P42 . 'v' . x1 -> id-range-5(string-append(0, char-to-string('v'))) . x1
+P43: P43 . 'w' . x1 -> id-range-5(string-append(0, char-to-string('w'))) . x1
+P44: P44 . 'x' . x1 -> id-range-5(string-append(0, char-to-string('x'))) . x1
+P45: P45 . 'y' . x1 -> id-range-5(string-append(0, char-to-string('y'))) . x1
+P46: P46 . 'z' . x1 -> id-range-5(string-append(0, char-to-string('z'))) . x1
+P47: P47 . id-range-5(x0) . x1 -> id-plus-6(string-append(0, x0)) . x1
+P48: P48 . id-range-5(x0) . id-plus-6(x1) . x2 -> id-plus-6(string-append(1, x0, x1)) . x2
+P49: P49 . id-plus-6(x0) . x1 -> id(string-append(0, x0)) . x1
+P5: P5 . aws . x1 -> ws-plus-3 . x1
+P6: P6 . aws . ws-plus-3 . x1 -> ws-plus-3 . x1
+P7: P7 . ws-plus-3 . x1 -> ws . x1
+P8: P8 . x1 -> ows-star-4 . x1
+P9: P9 . aws . ows-star-4 . x1 -> ows-star-4 . x1
+Posinfo: Posinfo . x1 -> posinfo(Posinfo) . x1
+Strt: Strt . ows . 'R' . 'O' . 'O' . 'T' . 'S' . ':' . ws . idlist(x0) . ws . 'G' . 'R' . 'A' . 'P' . 'H' . ':' . ws . idlist(x1) . x2 -> strt(Strt(x0, x1)) . x2
+edge: edge . id(x0) . ws . '-' . '>' . ws . idlist(x1) . ows . ';' . x2 -> ids(edge(x0, x1)) . x2
+node: node . id(x0) . x1 -> ids(node(x0)) . x1
+)
+(No reorganizing critical pairs found.)
+(No parsing critical pairs found.)

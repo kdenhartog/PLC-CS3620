@@ -1,0 +1,48 @@
+<Space id="13908" name="AUFLIA">
+<SpaceAttributes>
+<description value="no description"/>
+<sticky-leaders value="false"/>
+<inherit-users value="false"/>
+<locked value="false"/>
+</SpaceAttributes>
+<Solver id="54" name="CVC4-SMT-EVAL-2013"/>
+<Space id="13909" name="boogie">
+<SpaceAttributes>
+<description value="no description"/>
+<sticky-leaders value="false"/>
+<inherit-users value="false"/>
+<locked value="false"/>
+</SpaceAttributes>
+<Benchmark id="322917" name="AdditiveMethods_AdditiveMethods..ctor.smt2"/>
+<Benchmark id="322918" name="AdditiveMethods_AdditiveMethods.M.smt2"/>
+<Solver id="54" name="CVC4-SMT-EVAL-2013"/>
+<Solver id="71" name="CVC3-SMT-COMP-2010"/>
+<Solver id="72" name="CVC3-SMT-COMP-2011"/>
+<Solver id="73" name="CVC3-SMT-COMP-2012"/>
+<Solver id="74" name="CVC4-SMT-COMP-2012-Resubmission"/>
+<Solver id="78" name="Z3-SMT-COMP-2011"/>
+<Solver id="188" name="Z3-4.3.2.a054b099c1d6-x64-debian-6.0.6-SMT-EVAL-2013"/>
+<Solver id="199" name="CVC4-SMT-EVAL-2013"/>
+<Solver id="215" name="veriT 2013 beta 1"/>
+</Space>
+<Space id="13910" name="simplify">
+<SpaceAttributes>
+<description value="no description"/>
+<sticky-leaders value="false"/>
+<inherit-users value="false"/>
+<locked value="false"/>
+</SpaceAttributes>
+<Benchmark id="324268" name="javafe.ast.AmbiguousMethodInvocation.29.smt2"/>
+<Benchmark id="324269" name="javafe.ast.AmbiguousMethodInvocation.30.smt2"/>
+<Solver id="54" name="CVC4-SMT-EVAL-2013"/>
+<Solver id="71" name="CVC3-SMT-COMP-2010"/>
+<Solver id="72" name="CVC3-SMT-COMP-2011"/>
+<Solver id="73" name="CVC3-SMT-COMP-2012"/>
+<Solver id="74" name="CVC4-SMT-COMP-2012-Resubmission"/>
+<Solver id="78" name="Z3-SMT-COMP-2011"/>
+<Solver id="188" name="Z3-4.3.2.a054b099c1d6-x64-debian-6.0.6-SMT-EVAL-2013"/>
+<Solver id="199" name="CVC4-SMT-EVAL-2013"/>
+<Solver id="215" name="veriT 2013 beta 1"/>
+</Space>
+</Spice>
+

@@ -1,0 +1,266 @@
+Beginning processing of grammar lst.
+(Time elapsed: 0.)
+Converted grammar to AST for grammars.
+lst
+
+Start
+
+strt
+
+
+
+Syntactic
+
+Posinfo : posinfo -> .
+Strt : strt -> ows expr ows .
+Var : expr -> var .
+Parens : expr -> '(' ows expr ows ')' .
+Cons : expr -> expr ows ':' ':' ows expr .
+App : expr -> expr ows '+' '+' ows expr .
+Nil : expr -> '[' ']' .
+
+
+Lexical
+
+var-range-1 -> 'a' .
+var-range-1 -> 'b' .
+var-range-1 -> 'c' .
+var-range-1 -> 'd' .
+var-range-1 -> 'e' .
+var-range-1 -> 'f' .
+var-range-1 -> 'g' .
+var-range-1 -> 'h' .
+var-range-1 -> 'i' .
+var-range-1 -> 'j' .
+var-range-1 -> 'k' .
+var-range-1 -> 'l' .
+var-range-1 -> 'm' .
+var-range-1 -> 'n' .
+var-range-1 -> 'o' .
+var-range-1 -> 'p' .
+var-range-1 -> 'q' .
+var-range-1 -> 'r' .
+var-range-1 -> 's' .
+var-range-1 -> 't' .
+var-range-1 -> 'u' .
+var-range-1 -> 'v' .
+var-range-1 -> 'w' .
+var-range-1 -> 'x' .
+var-range-1 -> 'y' .
+var-range-1 -> 'z' .
+var-plus-2 -> var-range-1 .
+var-plus-2 -> var-range-1 var-plus-2 .
+var -> var-plus-2 .
+arrow-bar-3 => '→' .
+arrow-bar-3 => '-' '>' .
+arrow => arrow-bar-3 .
+ows-star-4 => .
+ows-star-4 => aws ows-star-4 .
+ows => ows-star-4 .
+ws-plus-5 => aws .
+ws-plus-5 => aws ws-plus-5 .
+ws => ws-plus-5 .
+aws-bar-6 => '\t' .
+aws-bar-6 => ' ' .
+aws-bar-7 => '\n' .
+aws-bar-7 => aws-bar-6 .
+aws => aws-bar-7 .
+
+
+Vars
+
+ x3 x2 x1 x0
+
+Rules
+
+0: Cons(Cons(x1, x2), x3) -> Cons(x1, Cons(x2, x3))
+1: App(App(x1, x2), x3) -> App(x1, App(x2, x3))
+2: Cons(App(x1, x2), x3) -> App(x1, Cons(x2, x3))
+3: Cons(x1, App(x2, x3)) -> App(Cons(x1, x2), x3)
+
+
+Syntactic non-terminals (defined by syntactic productions):
+  strt posinfo expr 
+
+Reading non-terminals (defined by lexical ->-productions):
+  var-range-1 var-plus-2 var 
+
+Recognizing non-terminals (defined by lexical =>-productions):
+  ws-plus-5 ws ows-star-4 ows aws-bar-7 aws-bar-6 aws arrow-bar-3 arrow 
+
+Terminal symbols:
+  '→' 'z' 'y' 'x' 'w' 'v' 'u' 't' 's' 'r' 'q' 'p' 'o' 'n' 'm' 'l' 'k' 'j' 'i' 'h' 'g' 'f' 'e' 'd' 'c' 'b' 'a' ']' '\t' '\n' '[' '>' ':' '-' '+' ')' '(' ' ' 
+
+
+
+(The parsing TRS for the grammar is:
+(
+App:  expr[0] #ows #'+' #'+' #ows expr[1] -> expr[App(x0, x1)]
+Cons:  expr[0] #ows #':' #':' #ows expr[1] -> expr[Cons(x0, x1)]
+Nil:  #'[' #']' -> expr[Nil]
+P0:  'a' -> var-range-1[string-append(0, char-to-string('a'))]
+P1:  'b' -> var-range-1[string-append(0, char-to-string('b'))]
+P10:  'k' -> var-range-1[string-append(0, char-to-string('k'))]
+P11:  'l' -> var-range-1[string-append(0, char-to-string('l'))]
+P12:  'm' -> var-range-1[string-append(0, char-to-string('m'))]
+P13:  'n' -> var-range-1[string-append(0, char-to-string('n'))]
+P14:  'o' -> var-range-1[string-append(0, char-to-string('o'))]
+P15:  'p' -> var-range-1[string-append(0, char-to-string('p'))]
+P16:  'q' -> var-range-1[string-append(0, char-to-string('q'))]
+P17:  'r' -> var-range-1[string-append(0, char-to-string('r'))]
+P18:  's' -> var-range-1[string-append(0, char-to-string('s'))]
+P19:  't' -> var-range-1[string-append(0, char-to-string('t'))]
+P2:  'c' -> var-range-1[string-append(0, char-to-string('c'))]
+P20:  'u' -> var-range-1[string-append(0, char-to-string('u'))]
+P21:  'v' -> var-range-1[string-append(0, char-to-string('v'))]
+P22:  'w' -> var-range-1[string-append(0, char-to-string('w'))]
+P23:  'x' -> var-range-1[string-append(0, char-to-string('x'))]
+P24:  'y' -> var-range-1[string-append(0, char-to-string('y'))]
+P25:  'z' -> var-range-1[string-append(0, char-to-string('z'))]
+P26:  var-range-1[0] -> var-plus-2[string-append(0, x0)]
+P27:  var-range-1[0] var-plus-2[1] -> var-plus-2[string-append(1, x0, x1)]
+P28:  var-plus-2[0] -> var[string-append(0, x0)]
+P29:  #'→' -> arrow-bar-3[]
+P3:  'd' -> var-range-1[string-append(0, char-to-string('d'))]
+P30:  #'-' #'>' -> arrow-bar-3[]
+P31:  #arrow-bar-3 -> arrow[]
+P32:  -> ows-star-4[]
+P33:  #aws #ows-star-4 -> ows-star-4[]
+P34:  #ows-star-4 -> ows[]
+P35:  #aws -> ws-plus-5[]
+P36:  #aws #ws-plus-5 -> ws-plus-5[]
+P37:  #ws-plus-5 -> ws[]
+P38:  #'\t' -> aws-bar-6[]
+P39:  #' ' -> aws-bar-6[]
+P4:  'e' -> var-range-1[string-append(0, char-to-string('e'))]
+P40:  #'\n' -> aws-bar-7[]
+P41:  #aws-bar-6 -> aws-bar-7[]
+P42:  #aws-bar-7 -> aws[]
+P5:  'f' -> var-range-1[string-append(0, char-to-string('f'))]
+P6:  'g' -> var-range-1[string-append(0, char-to-string('g'))]
+P7:  'h' -> var-range-1[string-append(0, char-to-string('h'))]
+P8:  'i' -> var-range-1[string-append(0, char-to-string('i'))]
+P9:  'j' -> var-range-1[string-append(0, char-to-string('j'))]
+Parens:  #'(' #ows expr[0] #ows #')' -> expr[Parens(x0)]
+Posinfo:  -> posinfo[Posinfo]
+Strt:  #ows expr[0] #ows -> strt[Strt(x0)]
+Var:  var[0] -> expr[Var(x0)]
+)
+)
+(The reorganizing TRS is terminating.)
+(Derivational complexity of the reorganizing TRS: O(n^4))
+(Local confluence of the reorganizing TRS: true)
+
+(Time elapsed: 0.02)
+Found nullable (ows-star-4, P32)
+Found nullable (ows, P34)
+Found nullable (posinfo, Posinfo)
+)
+(The parsing TRS that arises from the final automaton:
+(
+App:  expr[0] #ows #'+' #'+' #ows expr[1] -> expr[App(x0, x1)]
+Cons:  expr[0] #ows #':' #':' #ows expr[1] -> expr[Cons(x0, x1)]
+Nil:  #'[' #']' -> expr[Nil]
+P0:  'a' -> var-range-1[string-append(0, char-to-string('a'))]
+P1:  'b' -> var-range-1[string-append(0, char-to-string('b'))]
+P10:  'k' -> var-range-1[string-append(0, char-to-string('k'))]
+P11:  'l' -> var-range-1[string-append(0, char-to-string('l'))]
+P12:  'm' -> var-range-1[string-append(0, char-to-string('m'))]
+P13:  'n' -> var-range-1[string-append(0, char-to-string('n'))]
+P14:  'o' -> var-range-1[string-append(0, char-to-string('o'))]
+P15:  'p' -> var-range-1[string-append(0, char-to-string('p'))]
+P16:  'q' -> var-range-1[string-append(0, char-to-string('q'))]
+P17:  'r' -> var-range-1[string-append(0, char-to-string('r'))]
+P18:  's' -> var-range-1[string-append(0, char-to-string('s'))]
+P19:  't' -> var-range-1[string-append(0, char-to-string('t'))]
+P2:  'c' -> var-range-1[string-append(0, char-to-string('c'))]
+P20:  'u' -> var-range-1[string-append(0, char-to-string('u'))]
+P21:  'v' -> var-range-1[string-append(0, char-to-string('v'))]
+P22:  'w' -> var-range-1[string-append(0, char-to-string('w'))]
+P23:  'x' -> var-range-1[string-append(0, char-to-string('x'))]
+P24:  'y' -> var-range-1[string-append(0, char-to-string('y'))]
+P25:  'z' -> var-range-1[string-append(0, char-to-string('z'))]
+P26:  var-range-1[0] -> var-plus-2[string-append(0, x0)]
+P27:  var-range-1[0] var-plus-2[1] -> var-plus-2[string-append(1, x0, x1)]
+P28:  var-plus-2[0] -> var[string-append(0, x0)]
+P29:  #'→' -> arrow-bar-3[]
+P3:  'd' -> var-range-1[string-append(0, char-to-string('d'))]
+P30:  #'-' #'>' -> arrow-bar-3[]
+P31:  #arrow-bar-3 -> arrow[]
+P32:  -> ows-star-4[]
+P33:  #aws #ows-star-4 -> ows-star-4[]
+P34:  #ows-star-4 -> ows[]
+P35:  #aws -> ws-plus-5[]
+P36:  #aws #ws-plus-5 -> ws-plus-5[]
+P37:  #ws-plus-5 -> ws[]
+P38:  #'\t' -> aws-bar-6[]
+P39:  #' ' -> aws-bar-6[]
+P4:  'e' -> var-range-1[string-append(0, char-to-string('e'))]
+P40:  #'\n' -> aws-bar-7[]
+P41:  #aws-bar-6 -> aws-bar-7[]
+P42:  #aws-bar-7 -> aws[]
+P5:  'f' -> var-range-1[string-append(0, char-to-string('f'))]
+P6:  'g' -> var-range-1[string-append(0, char-to-string('g'))]
+P7:  'h' -> var-range-1[string-append(0, char-to-string('h'))]
+P8:  'i' -> var-range-1[string-append(0, char-to-string('i'))]
+P9:  'j' -> var-range-1[string-append(0, char-to-string('j'))]
+Parens:  #'(' #ows expr[0] #ows #')' -> expr[Parens(x0)]
+Posinfo:  -> posinfo[Posinfo]
+Strt:  #ows expr[0] #ows -> strt[Strt(x0)]
+Var:  var[0] -> expr[Var(x0)]
+)
+)
+(The TRS corresponding to the final parsing TRS:
+App: expr(x0) . ows . '+' . '+' . ows . expr(x1) . x2 -> expr(App(x0, x1)) . x2
+Cons: expr(x0) . ows . ':' . ':' . ows . expr(x1) . x2 -> expr(Cons(x0, x1)) . x2
+Nil: Nil . '[' . ']' . x1 -> expr(Nil) . x1
+P0: P0 . 'a' . x1 -> var-range-1(string-append(0, char-to-string('a'))) . x1
+P1: P1 . 'b' . x1 -> var-range-1(string-append(0, char-to-string('b'))) . x1
+P10: P10 . 'k' . x1 -> var-range-1(string-append(0, char-to-string('k'))) . x1
+P11: P11 . 'l' . x1 -> var-range-1(string-append(0, char-to-string('l'))) . x1
+P12: P12 . 'm' . x1 -> var-range-1(string-append(0, char-to-string('m'))) . x1
+P13: P13 . 'n' . x1 -> var-range-1(string-append(0, char-to-string('n'))) . x1
+P14: P14 . 'o' . x1 -> var-range-1(string-append(0, char-to-string('o'))) . x1
+P15: P15 . 'p' . x1 -> var-range-1(string-append(0, char-to-string('p'))) . x1
+P16: P16 . 'q' . x1 -> var-range-1(string-append(0, char-to-string('q'))) . x1
+P17: P17 . 'r' . x1 -> var-range-1(string-append(0, char-to-string('r'))) . x1
+P18: P18 . 's' . x1 -> var-range-1(string-append(0, char-to-string('s'))) . x1
+P19: P19 . 't' . x1 -> var-range-1(string-append(0, char-to-string('t'))) . x1
+P2: P2 . 'c' . x1 -> var-range-1(string-append(0, char-to-string('c'))) . x1
+P20: P20 . 'u' . x1 -> var-range-1(string-append(0, char-to-string('u'))) . x1
+P21: P21 . 'v' . x1 -> var-range-1(string-append(0, char-to-string('v'))) . x1
+P22: P22 . 'w' . x1 -> var-range-1(string-append(0, char-to-string('w'))) . x1
+P23: P23 . 'x' . x1 -> var-range-1(string-append(0, char-to-string('x'))) . x1
+P24: P24 . 'y' . x1 -> var-range-1(string-append(0, char-to-string('y'))) . x1
+P25: P25 . 'z' . x1 -> var-range-1(string-append(0, char-to-string('z'))) . x1
+P26: P26 . var-range-1(x0) . x1 -> var-plus-2(string-append(0, x0)) . x1
+P27: P27 . var-range-1(x0) . var-plus-2(x1) . x2 -> var-plus-2(string-append(1, x0, x1)) . x2
+P28: P28 . var-plus-2(x0) . x1 -> var(string-append(0, x0)) . x1
+P29: P29 . '→' . x1 -> arrow-bar-3 . x1
+P3: P3 . 'd' . x1 -> var-range-1(string-append(0, char-to-string('d'))) . x1
+P30: P30 . '-' . '>' . x1 -> arrow-bar-3 . x1
+P31: P31 . arrow-bar-3 . x1 -> arrow . x1
+P32: P32 . x1 -> ows-star-4 . x1
+P33: P33 . aws . ows-star-4 . x1 -> ows-star-4 . x1
+P34: P34 . ows-star-4 . x1 -> ows . x1
+P35: P35 . aws . x1 -> ws-plus-5 . x1
+P36: P36 . aws . ws-plus-5 . x1 -> ws-plus-5 . x1
+P37: P37 . ws-plus-5 . x1 -> ws . x1
+P38: P38 . '\t' . x1 -> aws-bar-6 . x1
+P39: P39 . ' ' . x1 -> aws-bar-6 . x1
+P4: P4 . 'e' . x1 -> var-range-1(string-append(0, char-to-string('e'))) . x1
+P40: P40 . '\n' . x1 -> aws-bar-7 . x1
+P41: P41 . aws-bar-6 . x1 -> aws-bar-7 . x1
+P42: P42 . aws-bar-7 . x1 -> aws . x1
+P5: P5 . 'f' . x1 -> var-range-1(string-append(0, char-to-string('f'))) . x1
+P6: P6 . 'g' . x1 -> var-range-1(string-append(0, char-to-string('g'))) . x1
+P7: P7 . 'h' . x1 -> var-range-1(string-append(0, char-to-string('h'))) . x1
+P8: P8 . 'i' . x1 -> var-range-1(string-append(0, char-to-string('i'))) . x1
+P9: P9 . 'j' . x1 -> var-range-1(string-append(0, char-to-string('j'))) . x1
+Parens: Parens . '(' . ows . expr(x0) . ows . ')' . x1 -> expr(Parens(x0)) . x1
+Posinfo: Posinfo . x1 -> posinfo(Posinfo) . x1
+Strt: Strt . ows . expr(x0) . ows . Strt_end . x1 -> strt(Strt(x0)) . x1
+Var: Var . var(x0) . x1 -> expr(Var(x0)) . x1
+)
+(No reorganizing critical pairs found.)
+(No parsing critical pairs found.)

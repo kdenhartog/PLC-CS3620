@@ -1,0 +1,39 @@
+xml
+
+Start
+
+start
+
+Syntactic
+
+Strt: start -> ows xml ows .
+
+Nested: xml -> starttag ows xml ows endtag .
+Seq: xml -> xml ows xml.
+StartEnd: xml -> startendtag.
+
+StartTag : starttag -> '<' id attrs '>'.
+EndTag : endtag -> '</' id '>'.
+
+AttrsCons : attrs -> ws id ows '=' ows strlit attrs.
+AttrsNil : attrs -> .
+
+Startendtag : startendtag -> '<' id attrs '/>'.
+
+Lexical
+
+aws => ('\n' | '\t' | space ).
+ws => aws+.
+ows => aws* .
+
+id -> namechar+.
+strlit -> '\"' ( namechar | ',' | '.' | space | '\\\"')* '\"'.
+namechar -> ['a' - 'z' 'A' - 'Z' '0' - '9' '-'].
+
+Vars
+
+x y z
+
+Rules
+
+Seq(Seq(x,y),z) -> Seq(x,Seq(y,z))

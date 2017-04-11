@@ -1,0 +1,20 @@
+digraph mem {
+3 [ color = green , shape = circle];
+6 [ color = green , shape = circle];
+7 [ color = green , shape = circle];
+3 -> { 6 7};
+3 [ color = green , shape = circle];
+z [ color = green , shape = circle];
+y [ color = green , shape = circle];
+z -> { y};
+w [ color = green , shape = circle];
+z [ color = green , shape = circle];
+w -> { z};
+y [ color = green , shape = circle];
+w [ color = green , shape = circle];
+y -> { w};
+y [ color = green , shape = circle];
+z [ color = green , shape = circle];
+hidden0 [shape = plaintext , label = ""];hidden0 -> 3
+hidden1 [shape = plaintext , label = ""];hidden1 -> y
+}

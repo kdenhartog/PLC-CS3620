@@ -1,0 +1,7 @@
+x = 3
+y = 5
+z = 6
+
+let x = (let y = y in y) in 
+  let z = (let u = z in x) in
+    y + z 
