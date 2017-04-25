@@ -1,0 +1,23 @@
+Project Title: Implement XML parser in a different language
+
+Project Members: Myself
+
+Summary:
+For my final project I intend to create an implementation of the XML parser we
+created in HW7, but this time it will be written in F#. This will follow the
+same guidelines as the Agda version and will have the same functionality.
+
+Technology:
+I plan to use Antlr as a parsing generator and F# to write my XML grammar file.
+To remediate potential issues with Visual Studio, I plan to work on this using
+the lab computers which are Windows based machines.
+
+Milestone: I intend to have the beginning layout of my input.xml file complete
+and will have begun working on the XML grammar file.
+
+Backup plan:
+In the even that I encounter issues installing/working with Visual Studio to
+write my files, I will look to write my files in a different language.
+The current order of languages I would use would be F# (plan A), Haskell,
+OCaml, then elisp. I have chosen to consider these as a backup language because
+I believe I may encounter issues trying to work in visual studio using Mac.
